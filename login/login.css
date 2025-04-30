@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* Garante que o conteúdo ocupe pelo menos a altura da tela */
-    background-color: #f0f0f0; /* Cor de fundo da página */
+    background-color: #f4ffed; /* Cor de fundo da página */
 }
 
 .login-container {
@@ -28,7 +28,7 @@ body {
 
 .input-group input[type="email"],
 .input-group input[type="password"] {
-    width: calc(100% - 20px); /* Largura total subtraindo o padding */
+    width: calc(100%); /* Largura total subtraindo o padding */
     padding: 10px;
     border: none;
     border-radius: 20px; /* Bordas arredondadas dos inputs */

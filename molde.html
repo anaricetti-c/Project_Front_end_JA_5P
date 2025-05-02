@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Molde</title>
+    <link rel="stylesheet" href="molde.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="#">Moldes</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Materiais</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Operações</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Peças</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Usuários</a></li>
+            <li class="navbar-icon"><a href="#"><img src="assets/usuario.png" alt="Usuário"></a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 class="form-title">Dados do molde</h2>
+        <form class="mold-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome">
+                </div>
+                <div class="form-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="data-entrega">Data de entrega /</label>
+                    <input type="date" id="data-entrega">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="">Selecione</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                        <option value="em-producao">Em Produção</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="prioridade">Prioridade</label>
+                    <select id="prioridade">
+                        <option value="">Selecione</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Média</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                </div>
+                <div class="form-group cliente-group">
+                    <label for="cliente">Cliente</label>
+                    <div class="cliente-input">
+                        <input type="text" id="cliente">
+                        <button type="button" class="add-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="plus-icon">
+                                <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6h6a.75.75 0 0 1 0 1.5h-6v6a.75.75 0 0 1-1.5 0v-6h-6a.75.75 0 0 1 0-1.5h6v-6a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dimensoes">Dimensões</label>
+                    <input type="text" id="dimensoes">
+                </div>
+                <div class="form-group save-button-group">
+                    <button type="submit" class="save-button">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

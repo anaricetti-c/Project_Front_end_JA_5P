@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Material</title>
+    <link rel="stylesheet" href="material.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="#">Moldes</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Materiais</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Operações</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Peças</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Usuários</a></li>
+            <li class="navbar-icon"><a href="#"><img src="usuario-icon.png" alt="Usuário"></a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 class="form-title">Dados do material</h2>
+        <form class="material-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="">Selecione</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao"></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="adicionar-material">Adicionar material</label>
+                    <button type="button" class="add-button">
+                        Adicionar material
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="plus-icon">
+                            <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6h6a.75.75 0 0 1 0 1.5h-6v6a.75.75 0 0 1-1.5 0v-6h-6a.75.75 0 0 1 0-1.5h6v-6a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="quantidade-estoque">Quantidade em estoque</label>
+                    <input type="number" id="quantidade-estoque">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dimensoes">Dimensões</label>
+                    <input type="text" id="dimensoes">
+                </div>
+                <div class="form-group save-button-group">
+                    <button type="submit" class="save-button">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

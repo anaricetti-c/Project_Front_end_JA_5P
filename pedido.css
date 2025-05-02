@@ -1,0 +1,144 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.navbar {
+    background-color: #1e4620; /* Cor verde escura da navbar */
+    color: white;
+    padding: 10px 0;
+}
+
+.navbar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha os itens à esquerda */
+}
+
+.navbar-item {
+    padding: 10px 15px;
+}
+
+.navbar-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-separator {
+    width: 2px;
+    height: 30px;
+    background-color: #dc3545; /* Cor vermelha do separador */
+    margin: 0 10px;
+}
+
+.navbar-list li:last-child {
+    margin-left: auto; /* Empurra o último item (ícone) para a direita */
+}
+
+.navbar-icon {
+    padding: 5px 15px;
+}
+
+.navbar-icon img {
+    height: 30px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px); /* Ajusta a altura subtraindo a navbar */
+    padding: 20px;
+}
+
+.form-card {
+    background-color: #d4edda; /* Cor de fundo do card verde claro */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Largura aproximada do card */
+}
+
+.form-title {
+    color: #155724; /* Cor do título verde escuro */
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.pedido-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #155724; /* Cor da label verde escuro */
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+    padding: 10px;
+    border: 1px solid #b3d7b8; /* Cor da borda do input verde claro */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.save-button {
+    background-color: #1e4620; /* Cor verde escura do botão Salvar */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-button:hover {
+    background-color: #173518;
+}
+
+/* Estilos para telas menores */
+@media (max-width: 600px) {
+    .container {
+        align-items: flex-start;
+    }
+
+    .form-card {
+        width: 95%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cliente</title>
+    <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="#">Moldes</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Materiais</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Operações</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Peças</a></li>
+            <li class="navbar-separator"></li>
+            <li class="navbar-item"><a href="#">Usuários</a></li>
+            <li class="navbar-icon"><a href="#"><img src="assets/usuario.png" alt="Usuário"></a></li>
+        </ul> <!--ajustar logo--> 
+    </nav>
+
+    <div class="container">
+        <div class="form-card">
+            <h2 class="form-title">Cadastro de cliente</h2>
+            <form class="client-form">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="criado-em">Criado em</label>
+                        <input type="date" id="criado-em" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pais">País</label>
+                        <input type="text" id="pais">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editado-em">Editado em</label>
+                    <input type="date" id="editado-em" disabled>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-button">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #1e5128; /* Cor verde escura do topo */
+    color: white;
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+nav ul li.active a {
+    background-color: #4e9a69; /* Tom de verde mais claro para a aba ativa */
+}
+
+nav ul li.user-icon {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+nav ul li.user-icon a {
+    padding: 5px;
+}
+
+nav ul li.user-icon img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+main {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 960px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.actions button {
+    background-color: #4e9a69; /* Tom de verde para os botões */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+    background-color: #3a734e;
+}
+
+.search-bar {
+    display: flex;
+    margin-left: auto;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    flex-grow: 1;
+}
+
+.search-bar button.search-button {
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-left: none;
+    padding: 10px 15px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button.search-button:hover {
+    background-color: #ccc;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    fill: #555;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead th {
+    background-color: #f2f2f2;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Adicione um estilo para simular a borda inferior na área principal */
+main::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px; /* Espessura da borda */
+    background-color: #1e5128; /* Cor da borda */
+    margin-top: 20px; /* Espaçamento acima da borda */
+    border-radius: 0 0 8px 8px; /* Acompanha o arredondamento do main */
+}

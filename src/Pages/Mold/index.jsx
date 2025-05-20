@@ -56,11 +56,14 @@ export default function Mold() {
         const delivery_date_formatted = date.toLocaleDateString("pt-BR");
         const status =
           m.status === "In Progress" ? "progress" : m.status.toLowerCase();
+        const customer_info = m.customer
+          ? `${m.customer.full_name} ${m.customer.country_name}`
+          : "Cliente não informado";
         return (
           <tr key={index}>
             <td>{m.name}</td>
             <td>
-              {m.customer.full_name} {m.customer.country_name}
+              {customer_info}
             </td>
             <td>
               <span className={`priority priority-${m.priority.toLowerCase()}`}>

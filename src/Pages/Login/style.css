@@ -1,0 +1,52 @@
+main {
+    font-family: sans-serif; /* Escolha uma fonte */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4ffed; /* Cor de fundo da página */
+}
+
+.login-container {
+    background-color: #386641; /* Cor verde do container */
+    padding: 30px;
+    border-radius: 15px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 300px; /* Largura do container */
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block; /* Faz o label ocupar a largura total */
+    color: white;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    width: calc(100%); /* Largura total subtraindo o padding */
+    padding: 10px;
+    border: none;
+    border-radius: 20px; /* Bordas arredondadas dos inputs */
+    background-color: #e0e0e0; /* Cor de fundo dos inputs */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+button[type="submit"] {
+    background-color: #a7c957; /* Cor do botão */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Transição suave na cor ao passar o mouse */
+}
+
+button[type="submit"]:hover {
+    background-color: #8cb339;
+}

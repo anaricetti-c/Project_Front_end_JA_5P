@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #e8e8e8;
+}
+body::-webkit-scrollbar {
+  display: none; /* Para Chrome, Safari e outros navegadores baseados em WebKit */
+}
+
+#root {
+  min-height: 100vh;
+}

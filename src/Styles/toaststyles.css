@@ -1,0 +1,7 @@
+.Toastify__toast {
+    /* color: white; */ /*Adjust text color if necessary */
+}
+
+.Toastify__toast-container {
+    width: auto !important; 
+}

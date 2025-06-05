@@ -13,6 +13,7 @@ export default function PaginatedTable({
   total,
   filters,
   columns = [],
+  pageSize = 15,
 }) {
   return (
     <div className={styles.container}>
@@ -64,7 +65,7 @@ export default function PaginatedTable({
         </table>
       </div>
       {!loading && (
-        <CustomPagination search={search} setSearch={setSearch} total={total} />
+        <CustomPagination pageSize={pageSize} search={search} setSearch={setSearch} total={total} />
       )}
     </div>
   );

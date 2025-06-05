@@ -17,7 +17,7 @@ const dropdownAnimation = keyframes`
 
 export const Header = styled.header`
   width: 100%;
-  height: 60px;
+  height: 8vh;
   background-color: ${mainGreen};
   padding: 0 24px;
   display: flex;

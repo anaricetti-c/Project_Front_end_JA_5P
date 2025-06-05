@@ -36,7 +36,7 @@ export const defaultSelectStyle = {
 };
 
 export const defaultPaginationStyle = {
-  paddingTop: "10px",
+  paddingTop: "15px",
   alignSelf: "center",
   "& .MuiPaginationItem-root": {
     borderRadius: "8px",

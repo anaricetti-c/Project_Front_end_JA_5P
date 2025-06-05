@@ -36,18 +36,20 @@ export const defaultSelectStyle = {
 };
 
 export const defaultPaginationStyle = {
-  paddingTop: "15px",
+  paddingTop: "10px",
   alignSelf: "center",
   "& .MuiPaginationItem-root": {
-    borderRadius: "8px",
+    borderRadius: "50%",
     textTransform: "none",
     fontWeight: 500,
     color: "#333",
     border: "1px solid transparent",
     transition: "all 0.3s ease",
-    minWidth: "36px",
-    height: "36px",
-    margin: "0 4px",
+    minWidth: "28px",
+    height: "28px",
+    fontSize: "0.75rem",
+    margin: "0 3px",
+    padding: "0",
   },
   "& .MuiPaginationItem-root:hover:not(.Mui-selected)": {
     backgroundColor: "#f1f3f5",
@@ -59,7 +61,7 @@ export const defaultPaginationStyle = {
     color: "#fff",
     borderColor: "#28a745",
     fontWeight: 600,
-    boxShadow: "0 2px 5px rgba(40, 167, 69, 0.4)",
+    boxShadow: "0 2px 4px rgba(40, 167, 69, 0.35)",
   },
   "& .MuiPaginationItem-root.Mui-disabled": {
     color: "#ccc",

@@ -15,7 +15,7 @@ export default function CustomPagination({
   return (
     <Pagination
       page={Number(search.get("page"))}
-      size="large"
+      size="small"
       count={Math.ceil(total / pageSize)}
       onChange={handlePageChange}
       sx={paginationStyle}

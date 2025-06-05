@@ -9,7 +9,7 @@ import Mold from "./Pages/Mold";
 import Part from "./Pages/Part";
 import Operation from "./Pages/Operation";
 import Material from "./Pages/Material";
-import NavBar from "./Components/NavBar";
+import CustomNavBar from "./Components/CustomNavBar";
 import ProtectedRoute from "./Pages/ProtectedRoute";
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <>
-      {!isLoginPage && <NavBar />}
+      {!isLoginPage && <CustomNavBar/>}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route
@@ -30,11 +30,11 @@ export default function App() {
           element={<ProtectedRoute targetPage={<Part />} />}
         />
         <Route
-          path="/operation"
+          path="/operations"
           element={<ProtectedRoute targetPage={<Operation />} />}
         />
         <Route
-          path="/material"
+          path="/materials"
           element={<ProtectedRoute targetPage={<Material />} />}
         />
         {/* <Route path="*" element={<NotFoundPage />} /> */}

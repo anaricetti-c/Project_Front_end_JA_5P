@@ -55,7 +55,7 @@ export default function Operation() {
     } else {
       return (
         <tr>
-          <td colSpan={7} className="text-center py-4">
+          <td colSpan={7}>
             Nenhuma operação cadastrada.
           </td>
         </tr>

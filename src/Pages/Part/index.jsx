@@ -108,7 +108,7 @@ export default function Part() {
     } else {
       return (
         <tr>
-          <td colSpan={9} className="text-center py-4">
+          <td colSpan={9}>
             Nenhuma peça cadastrada.
           </td>
         </tr>

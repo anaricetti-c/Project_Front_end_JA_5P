@@ -30,9 +30,11 @@
   transition: all 0.3s ease;
 }
 
-.button:hover {
-  background-color: #218838;
-}
+/* .button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+} */
+
 
 .adicionar {
   background-color: #3d9970;

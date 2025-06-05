@@ -76,7 +76,7 @@ export default function Mold() {
           ? `${m.customer.full_name} ${m.customer.country_name}`
           : "Cliente não informado";
         return (
-          <tr key={index}>
+          <tr key={m.id}>
             <td>{m.name}</td>
             <td>{customer_info}</td>
             <td>
@@ -90,13 +90,16 @@ export default function Mold() {
             </td>
             <td>{m.progress_percentage}%</td>
             <td>{m.quantity}</td>
+            <td>
+              <img src="delete.png" alt="Deletar" className="icon"/>
+            </td>
           </tr>
         );
       });
     } else {
       return (
         <tr>
-          <td colSpan={7} className="text-center py-4">
+          <td colSpan={8}>
             Nenhum molde cadastrado.
           </td>
         </tr>
@@ -123,6 +126,7 @@ export default function Mold() {
           "Status",
           "Progresso",
           "Quantidade",
+          ""
         ]}
       />
     </main>

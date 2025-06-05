@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import "./style.css";
 
 import { getHeaders } from "../../Services/headers";
 import { api } from "../../Services/api";

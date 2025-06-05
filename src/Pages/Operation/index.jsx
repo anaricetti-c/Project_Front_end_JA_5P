@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import "./style.css";
 import qs from "qs";
 
 import { getHeaders } from "../../Services/headers";

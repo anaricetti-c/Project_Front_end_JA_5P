@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import CustomSelect from "../CustomSelect";
 import CustomPagination from "../CustomPagination";
 
@@ -15,6 +17,13 @@ export default function PaginatedTable({
   columns = [],
   pageSize = 15,
 }) {
+
+  useEffect(() => {
+    if (!search.get("page")) {
+      setSearch({ page: "1" });
+    }
+  }, [search, setSearch]);
+
   return (
     <div className={styles.container}>
       <div className={styles.actions}>

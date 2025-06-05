@@ -16,12 +16,6 @@ export default function Mold() {
   const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
-    if (!search.get("page")) {
-      setSearch({ page: "1" });
-    }
-  }, [search, setSearch]);
-
-  useEffect(() => {
     const page = Number(search.get("page"));
     if (page) {
       fetchMolds(page);

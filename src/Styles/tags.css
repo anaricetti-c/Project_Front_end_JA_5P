@@ -1,0 +1,55 @@
+/* Status e prioridade */
+.priority,
+.status {
+  display: inline-block;
+  min-width: 100px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-progress {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-completed,
+.status-approved,
+.status-available {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.priority-low {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.priority-medium {
+  background-color: #ffe0b2;
+  color: #974706;
+}
+
+.priority-high {
+  background-color: #ffcdd2;
+  color: #b30b0b;
+}
+
+.priority-urgent {
+  background-color: #e1c8ea;
+  color: #4f0568;
+}
+
+.description-column {
+  word-break: break-word;
+  font-size: small;
+  text-align: start;
+}

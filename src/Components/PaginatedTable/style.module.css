@@ -7,7 +7,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: calc(90vh - 40px);
+  height: calc(95vh - 40px);
 }
 
 .actions {

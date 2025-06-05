@@ -1,40 +1,62 @@
-import { useState, useContext, useEffect } from "react";
+import qs from "qs";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
-import { getHeaders } from "../../Services/headers";
+import styles from "./style.module.css";
+
 import { api } from "../../Services/api";
+import { getHeaders } from "../../Services/headers";
+import PaginatedTable from "../../Components/PaginatedTable";
 
 export default function Material() {
   const [loading, setLoading] = useState(false);
-  const [molds, setMolds] = useState([]);
+  const [materials, setMaterials] = useState([]);
+  const [search, setSearch] = useSearchParams();
+  const [total, setTotal] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
-    fetchMolds();
-  }, []);
+    if (!search.get("page")) {
+      setSearch({ page: "1" });
+    }
+  }, [search, setSearch]);
 
-  async function fetchMolds() {
+  useEffect(() => {
+    const page = Number(search.get("page"));
+    if (page) {
+      fetchMaterials(page);
+    }
+  }, [search]);
+
+  async function fetchMaterials(page) {
     setLoading(true);
     try {
-      const moldsResponse = await api.get(`/material/all`, {
+      const materialsResponse = await api.get(`/material/all`, {
         headers: getHeaders(),
+        params: {
+          // associations: ["customer", "created_by"],
+          page: page,
+          limit: 9,
+        },
+        // paramsSerializer: (params) =>
+        //   qs.stringify(params, { arrayFormat: "repeat" }),
       });
-
-      console.log(moldsResponse.data);
-      setMolds(moldsResponse.data.data);
+      setTotal(materialsResponse.data.metadata.total);
+      console.log(materialsResponse.data);
+      setMaterials(materialsResponse.data.data);
     } catch (error) {
-      console.error("Error fetching molds:", error);
+      console.error("Error fetching materials:", error);
     } finally {
       setLoading(false);
     }
   }
 
-  function getMolds() {
-    if (Array.isArray(molds) && molds.length > 0) {
-      return molds.map((m, index) => {
+  function getMaterials() {
+    if (Array.isArray(materials) && materials.length > 0) {
+      return materials.map((m, index) => {
         const dateString = m.created_at;
         const date = new Date(dateString);
         const creation_date = date.toLocaleDateString("pt-BR");
-        const maquina =
-          m.machine_id !== null ? m.machine_id : 'Operação Manual';
         return (
           <tr key={index}>
             <td>{m.name}</td>
@@ -58,44 +80,26 @@ export default function Material() {
   }
 
   return (
-    <main>
-      <div className="container">
-        <div className="actions">
-          <button className="button adicionar">Adicionar</button>
-          <button className="button importar">Importar</button>
-          <button className="button relatorios">Relatórios</button>
-          <div className="search-bar">
-            <input type="text" placeholder="" />
-            <button className="search-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="search-icon"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Descrição</th>
-              <th>Tempo de Entrega</th>
-              <th>Data de Criação</th>
-              <th>Quantidade em Estoque</th>
-              <th>Unidade de Medida</th>
-            </tr>
-          </thead>
-          <tbody>{!loading && getMolds()}</tbody>
-        </table>
-      </div>
+    <main className={styles.main}>
+      <PaginatedTable
+        total={total}
+        pageSize={9}
+        loading={loading}
+        getEntities={getMaterials}
+        search={search}
+        setSearch={setSearch}
+        filters={"material"}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        columns={[
+          "Código",
+          "Descrição",
+          "Tempo de Entrega",
+          "Data de Criação",
+          "Quantidade em Estoque",
+          "Unidade de Medida",
+        ]}
+      />
     </main>
   );
 }

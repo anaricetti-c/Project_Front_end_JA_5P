@@ -1,27 +1,42 @@
-import { useState, useContext, useEffect } from "react";
-import "./style.css";
 import qs from "qs";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
-import { getHeaders } from "../../Services/headers";
+import styles from "./style.module.css";
+
 import { api } from "../../Services/api";
+import { getHeaders } from "../../Services/headers";
+import PaginatedTable from "../../Components/PaginatedTable";
 
 export default function Mold() {
   const [loading, setLoading] = useState(false);
   const [molds, setMolds] = useState([]);
+  const [search, setSearch] = useSearchParams();
+  const [total, setTotal] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
-    fetchMolds();
-  }, []);
+    if (!search.get("page")) {
+      setSearch({ page: "1" });
+    }
+  }, [search, setSearch]);
 
-  async function fetchMolds() {
+  useEffect(() => {
+    const page = Number(search.get("page"));
+    if (page) {
+      fetchMolds(page);
+    }
+  }, [search]);
+
+  async function fetchMolds(page) {
     setLoading(true);
     try {
       const moldsResponse = await api.get(`/mold/all`, {
         headers: getHeaders(),
         params: {
-          associations: ['customer', 'created_by'],
-          page: 1,
-          limit: 10,
+          associations: ["customer", "created_by"],
+          page: page,
+          limit: 15,
         },
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: "repeat" }),
@@ -35,6 +50,7 @@ export default function Mold() {
         Medium: 3,
         Low: 4,
       };
+      setTotal(moldsResponse.data.metadata.total);
 
       const sortedMolds = [...moldsResponse.data.data].sort((a, b) => {
         return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -62,9 +78,7 @@ export default function Mold() {
         return (
           <tr key={index}>
             <td>{m.name}</td>
-            <td>
-              {customer_info}
-            </td>
+            <td>{customer_info}</td>
             <td>
               <span className={`priority priority-${m.priority.toLowerCase()}`}>
                 {m.priority}
@@ -91,45 +105,26 @@ export default function Mold() {
   }
 
   return (
-    <main>
-      <div className="container">
-        <div className="actions">
-          <button className="button adicionar">Adicionar</button>
-          <button className="button importar">Importar</button>
-          <button className="button relatorios">Relatórios</button>
-          <div className="search-bar">
-            <input type="text" placeholder="" />
-            <button className="search-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="search-icon"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Cliente</th>
-              <th>Prioridade</th>
-              <th>Prazo</th>
-              <th>Status</th>
-              <th>Progresso</th>
-              <th>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>{!loading && getMolds()}</tbody>
-        </table>
-      </div>
+    <main className={styles.main}>
+      <PaginatedTable
+        total={total}
+        loading={loading}
+        getEntities={getMolds}
+        search={search}
+        setSearch={setSearch}
+        filters={"mold"}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        columns={[
+          "Código",
+          "Cliente",
+          "Prioridade",
+          "Prazo",
+          "Status",
+          "Progresso",
+          "Quantidade",
+        ]}
+      />
     </main>
   );
 }

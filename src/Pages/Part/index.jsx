@@ -1,32 +1,53 @@
-import { useState, useContext, useEffect } from "react";
-import "./style.css";
 import qs from "qs";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
-import { getHeaders } from "../../Services/headers";
+import styles from "./style.module.css";
+
 import { api } from "../../Services/api";
+import { getHeaders } from "../../Services/headers";
+import PaginatedTable from "../../Components/PaginatedTable";
 
 export default function Part() {
   const [loading, setLoading] = useState(false);
   const [parts, setParts] = useState([]);
+  const [search, setSearch] = useSearchParams();
+  const [total, setTotal] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
-    fetchParts();
-  }, []);
+    if (!search.get("page")) {
+      setSearch({ page: "1" });
+    }
+  }, [search, setSearch]);
 
-  async function fetchParts() {
+  useEffect(() => {
+    const page = Number(search.get("page"));
+    if (page) {
+      fetchParts(page);
+    }
+  }, [search]);
+
+  async function fetchParts(page) {
     setLoading(true);
     try {
       const partsResponse = await api.get(`/part/all`, {
         headers: getHeaders(),
         params: {
-          associations: ["mold", "operation_associations", "material_associations"],
-          page: 1,
-          limit: 10,
+          associations: [
+            "mold",
+            "operation_associations",
+            "material_associations",
+            "nc_program",
+            "model_3d",
+          ],
+          page: page,
+          limit: 15,
         },
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: "repeat" }),
       });
-
+      setTotal(partsResponse.data.metadata.total);
       console.log(partsResponse.data);
       setParts(partsResponse.data.data);
     } catch (error) {
@@ -39,31 +60,35 @@ export default function Part() {
   function getParts() {
     if (Array.isArray(parts) && parts.length > 0) {
       return parts.map((p, index) => {
-        const status = p.status === 'In Progress' ? 'progress' : p.status.toLowerCase();
+        const status =
+          p.status === "In Progress" ? "progress" : p.status.toLowerCase();
         let material_associations = p.material_associations; // valor padrão
         let material = "Pending"; // valor padrão
 
-        if (material_associations.some(p => p.status === "Pending")) {
+        if (material_associations.some((p) => p.status === "Pending")) {
           material = "Pending";
-        } else if (material_associations.some(p => p.status === "Available")) {
+        } else if (
+          material_associations.some((p) => p.status === "Available")
+        ) {
           material = "Available";
         }
+        const nc_status = p.nc_program !== null ? "available" : "pending";
+        const model_3d_status = p.model_3d !== null ? "available" : "pending";
+
         return (
           <tr key={index}>
             <td>{p.mold.name}</td>
             <td>{p.name}</td>
-            <td className=".description-column">
+            <td className="description-column">
               {p.description ? p.description : "Sem descrição"}
             </td>
-            
+
             <td>
-              <span className={`status status-${p.nc_program.toLowerCase()}`}>
-                {p.nc_program}
-              </span>
+              <span className={`status status-${nc_status}`}>{nc_status}</span>
             </td>
             <td>
-              <span className={`status status-${p.model_3d.toLowerCase()}`}>
-                {p.model_3d}
+              <span className={`status status-${model_3d_status}`}>
+                {model_3d_status}
               </span>
             </td>
             <td>
@@ -73,11 +98,9 @@ export default function Part() {
             </td>
             <td>{p.progress_percentage}%</td>
             <td>
-              <span className={`status status-${status}`}>
-                {p.status}
-              </span>
+              <span className={`status status-${status}`}>{p.status}</span>
             </td>
-            
+
             <td>{p.quantity}</td>
           </tr>
         );
@@ -85,7 +108,7 @@ export default function Part() {
     } else {
       return (
         <tr>
-          <td colSpan={7} className="text-center py-4">
+          <td colSpan={9} className="text-center py-4">
             Nenhuma peça cadastrada.
           </td>
         </tr>
@@ -94,50 +117,28 @@ export default function Part() {
   }
 
   return (
-    <main>
-      <div className="container">
-        <div className="actions">
-          <button className="button adicionar">Adicionar</button>
-          <button className="button importar">Importar</button>
-          <button className="button relatorios">Relatórios</button>
-          <div className="search-bar">
-            <input type="text" placeholder="" />
-            <button className="search-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="search-icon"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Molde</th>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Modelo 3D</th>
-              <th>Programa NC</th>
-              <th>Materiais</th>
-              <th>Status</th>
-              <th>Progresso</th>
-              <th>Quantidade</th>
-
-              {/* <th>Código</th>
-              <th>Código do Molde</th> */}
-            </tr>
-          </thead>
-          <tbody>{!loading && getParts()}</tbody>
-        </table>
-      </div>
+    <main className={styles.main}>
+      <PaginatedTable
+        total={total}
+        loading={loading}
+        getEntities={getParts}
+        search={search}
+        setSearch={setSearch}
+        filters={"part"}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        columns={[
+          "Molde",
+          "Nome",
+          "Descrição",
+          "Programa NC",
+          "Modelo 3D",
+          "Materiais",
+          "Status",
+          "Progresso",
+          "Quantidade",
+        ]}
+      />
     </main>
   );
 }

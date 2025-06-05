@@ -1,8 +1,8 @@
 import { Header, NavContainer, Title, Menu, MenuItem, Dropdown, DropdownToggle, DropdownMenu, RightContainer } from "./style.jsx";
-import ProfileAvatar from '../ProfileAvatar';
+import ProfileAvatar from '../ProfileAvatar/index.jsx';
 import { useState, useEffect, useRef } from "react";
 
-export default function NavBar() {
+export default function CustomNavBar() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRef = useRef();
 
@@ -10,7 +10,6 @@ export default function NavBar() {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
-  // Fecha dropdown clicando fora
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

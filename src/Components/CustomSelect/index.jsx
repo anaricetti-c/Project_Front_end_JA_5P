@@ -1,28 +1,52 @@
 import { Select, MenuItem } from "@mui/material";
+import { useState, useEffect } from "react";
 
-import { formatLabel } from "../../Utils/format.jsx";
 import {
   defaultMenuItemStyle,
   defaultSelectStyle,
-} from "../../Styles/mui_styles.jsx";
+} from "../../Styles/muiStyles.js";
+import { formatLabel } from "../../Utils/format.jsx";
+import { sortFieldsByDotPriority } from "../../Utils/sort.jsx";
+import { api } from "../../Services/api.jsx"; // ajuste o path
+import { getHeaders } from "../../Services/headers.jsx"; // ajuste o path
 
 /**
  * Componente reutilizável de Select estilizado
  * @param {string} defaultText - Texto padrão do MenuItem vazio
  * @param {string} selectedFilter - Valor selecionado
  * @param {(value: string) => void} setSelectedFilter - Função para atualizar o valor
- * @param {string[]} filters - Lista de opções
- * @param {(value: string) => string} formatLabel - Função para formatar o texto da opção
+ * @param {string} model - Nome do modelo para buscar os filtros
+ * @param {(value: string) => string} formatText - Função para formatar o texto da opção
  */
 export default function CustomSelect({
   defaultText = "Filtro",
   selectedFilter,
   setSelectedFilter,
-  filters = [],
+  model,
   formatText = formatLabel,
   menuItemStyle = defaultMenuItemStyle,
   selectStyle = defaultSelectStyle,
 }) {
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    if (model) fetchFilters();
+  }, [model]);
+
+  async function fetchFilters() {
+    try {
+      const filtersResponse = await api.get("/utils/filter_fields", {
+        headers: getHeaders(),
+        params: { model },
+      });
+
+      const sortedFilters = sortFieldsByDotPriority(filtersResponse.data.filter_fields);
+      setFilters(sortedFilters);
+    } catch (error) {
+      console.error("Erro ao buscar filtros:", error);
+    }
+  }
+
   return (
     <Select
       value={selectedFilter}
@@ -40,18 +64,18 @@ export default function CustomSelect({
         },
       }}
     >
-      <MenuItem value="" disabled sx={{ fontStyle: "italic", color: "#777" }}>
+      <MenuItem value="" sx={{ fontStyle: "italic", color: "#777" }}>
         {defaultText}
       </MenuItem>
 
       {filters.length > 0 ? (
-        filters.map((f, index) => (
-          <MenuItem key={index} value={f} sx={menuItemStyle}>
+        filters.map((f) => (
+          <MenuItem key={f} value={f} sx={menuItemStyle}>
             {formatText(f)}
           </MenuItem>
         ))
       ) : (
-        <MenuItem key="default" value="" disabled sx={{ color: "#aaa" }}>
+        <MenuItem key="no-options" value="" disabled sx={{ color: "#aaa" }}>
           Nenhum filtro disponível
         </MenuItem>
       )}

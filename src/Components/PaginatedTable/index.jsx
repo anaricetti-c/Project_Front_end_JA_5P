@@ -11,7 +11,7 @@ export default function PaginatedTable({
   search,
   setSearch,
   total,
-  filters = [],
+  filters,
   columns = [],
 }) {
   return (
@@ -20,10 +20,10 @@ export default function PaginatedTable({
         <button className={`${styles.button} ${styles.adicionar}`}>
           Adicionar
         </button>
-        {/* <button className={`${styles.button} ${styles.importar}`}>
-            Importar
-          </button>
-          <button className={`${styles.button} ${styles.relatorios}`}>
+        <button className={`${styles.button} ${styles.importar}`}>
+          Importar
+        </button>
+        {/* <button className={`${styles.button} ${styles.relatorios}`}>
             Relatórios
           </button> */}
 
@@ -31,7 +31,7 @@ export default function PaginatedTable({
           <CustomSelect
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
-            filters={filters}
+            model={filters}
           />
 
           <input type="text" placeholder="" />
@@ -63,7 +63,9 @@ export default function PaginatedTable({
           <tbody>{!loading && getEntities()}</tbody>
         </table>
       </div>
-      {!loading && <CustomPagination search={search} setSearch={setSearch} total={total}/>}
+      {!loading && (
+        <CustomPagination search={search} setSearch={setSearch} total={total} />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Pagination } from "@mui/material";
 
-import { defaultPaginationStyle } from "../../Styles/mui_styles.jsx";
+import { defaultPaginationStyle } from "../../Styles/muiStyles.js";
 
 export default function CustomPagination({
   search,

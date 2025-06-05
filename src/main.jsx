@@ -4,9 +4,9 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 // import { SpeedInsights } from "@vercel/speed-insights/react";
 // import { Analytics } from "@vercel/analytics/react"
-import { UserProvider } from "./Context/user.jsx";
-import "./Styles/global.css";
-import "./Styles/tags.css"
+import { UserProvider } from "./context/user.jsx";
+import "./styles/global.css";
+import "./styles/tags.css"
 
 
 createRoot(document.getElementById("root")).render(

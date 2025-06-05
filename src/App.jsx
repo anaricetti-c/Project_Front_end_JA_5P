@@ -2,15 +2,15 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../src/Styles/toaststyles.css";
+import "../src/styles/toaststyles.css";
 
-import Login from "./Pages/Login";
-import Mold from "./Pages/Mold";
-import Part from "./Pages/Part";
-import Operation from "./Pages/Operation";
-import Material from "./Pages/Material";
-import CustomNavBar from "./Components/CustomNavBar";
-import ProtectedRoute from "./Pages/ProtectedRoute";
+import Login from "./pages/Login";
+import Mold from "./pages/Mold";
+import Part from "./pages/Part";
+import Operation from "./pages/Operation";
+import Material from "./pages/Material";
+import CustomNavBar from "./components/CustomNavBar";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 export default function App() {
   const location = useLocation();

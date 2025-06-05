@@ -3,8 +3,8 @@ import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import { api } from "../../Services/api"
-import { UserContext } from "../../Context/user";
+import { api } from "../../services/api"
+import { UserContext } from "../../context/user";
 
 import styles from "./style.module.css";
 

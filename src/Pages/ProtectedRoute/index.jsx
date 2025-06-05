@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import AccessDenied from "../AccessDenied";
-import { api } from "../../Services/api";
+import { api } from "../../services/api";
 
 export default function ProtectedRoute({ targetPage }) {
   const [authorized, setAuthorized] = useState(null); // null = loading

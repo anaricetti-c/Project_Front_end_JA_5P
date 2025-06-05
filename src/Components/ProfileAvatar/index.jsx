@@ -12,7 +12,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "@mui/icons-material";
 import { indigo } from "@mui/material/colors";
 
-import { UserContext } from "../../Context/user";
+import { UserContext } from "../../context/user";
 
 export default function ProfileAvatar() {
   const { currentUser, userLogout } = useContext(UserContext);

@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import qs from "qs";
 
-import { getHeaders } from "../../Services/headers";
-import { api } from "../../Services/api";
+import { getHeaders } from "../../services/headers";
+import { api } from "../../services/api";
 
 export default function Operation() {
   const [loading, setLoading] = useState(false);

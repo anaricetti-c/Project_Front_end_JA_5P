@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import {
   defaultMenuItemStyle,
   defaultSelectStyle,
-} from "../../Styles/muiStyles.js";
-import { formatLabel } from "../../Utils/format.jsx";
-import { sortFieldsByDotPriority } from "../../Utils/sort.jsx";
-import { api } from "../../Services/api.jsx"; // ajuste o path
-import { getHeaders } from "../../Services/headers.jsx"; // ajuste o path
+} from "../../styles/muiStyles.js";
+import { formatLabel } from "../../utils/format.jsx";
+import { sortFieldsByDotPriority } from "../../utils/sort.jsx";
+import { api } from "../../services/api.jsx"; // ajuste o path
+import { getHeaders } from "../../services/headers.jsx"; // ajuste o path
 
 /**
  * Componente reutilizável de Select estilizado

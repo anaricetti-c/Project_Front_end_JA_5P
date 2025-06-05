@@ -1,12 +1,12 @@
-import qs from "qs";
+// import qs from "qs";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./style.module.css";
 
-import { api } from "../../Services/api";
-import { getHeaders } from "../../Services/headers";
-import PaginatedTable from "../../Components/PaginatedTable";
+import { api } from "../../services/api";
+import { getHeaders } from "../../services/headers";
+import PaginatedTable from "../../components/PaginatedTable";
 
 export default function Material() {
   const [loading, setLoading] = useState(false);

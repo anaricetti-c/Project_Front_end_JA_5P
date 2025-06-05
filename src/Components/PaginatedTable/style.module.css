@@ -1,0 +1,182 @@
+.container {
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: calc(90vh - 40px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #218838;
+}
+
+.adicionar {
+  background-color: #3d9970;
+}
+
+.adicionar:hover {
+  background-color: #2f7858;
+}
+/* 
+.importar {
+  background-color: #007bff;
+}
+
+.importar:hover {
+  background-color: #0056b3;
+}
+
+.relatorios {
+  background-color: #6c757d;
+}
+
+.relatorios:hover {
+  background-color: #565e64;
+} */
+
+.searchBar {
+  display: flex;
+  margin-left: auto;
+}
+
+.searchBar input[type="text"] {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  font-size: 14px;
+  height: 40px;
+  width: 320px;
+}
+
+.searchButton {
+  background-color: #e9ecef;
+  border: 1px solid #ccc;
+  border-left: none;
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  height: 400px; /* ajuste fixo só para teste */
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  /* overflow: hidden; */ /* comentar */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dataTable thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  z-index: 10;
+  border-bottom: 2px solid #ddd;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 14px 18px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dataTable th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+}
+
+.dataTable tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Status e prioridade */
+.priority,
+.status {
+  display: inline-block;
+  min-width: 100px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-progress {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.priority-low {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.priority-medium {
+  background-color: #ffe0b2;
+  color: #974706;
+}
+
+.priority-high {
+  background-color: #ffcdd2;
+  color: #b30b0b;
+}
+
+.priority-urgent {
+  background-color: #e1c8ea;
+  color: #4f0568;
+}

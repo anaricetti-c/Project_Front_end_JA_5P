@@ -11,7 +11,7 @@
   text-transform: capitalize;
 }
 
-.status-pending {
+.status-pending, .status-under-maintenance {
   background-color: #fff3cd;
   color: #856404;
 }
@@ -38,7 +38,7 @@
   color: #974706;
 }
 
-.priority-high {
+.priority-high, .status-out-of-service {
   background-color: #ffcdd2;
   color: #b30b0b;
 }

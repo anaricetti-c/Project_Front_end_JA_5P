@@ -44,6 +44,8 @@ export default function Login() {
     return (
         <main>
             <div className="login-container">
+                <h2>Bem-vindo de volta!</h2>
+
                 <div className="input-group">
                     <label htmlFor="email">Email</label>
                     <input type="email" name="email"  onChange={(e) => setEmail(e.target.value)} required />

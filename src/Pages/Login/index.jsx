@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../Services/api"
 import { UserContext } from "../../Context/user";
 
-import './style.css'
+import styles from "./style.module.css";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -43,14 +43,14 @@ export default function Login() {
 
     return (
         <main>
-            <div className="login-container">
+            <div className={styles.loginContainer}>
                 <h2>Bem-vindo de volta!</h2>
 
-                <div className="input-group">
+                <div className={styles.inputGroup}>
                     <label htmlFor="email">Email</label>
                     <input type="email" name="email"  onChange={(e) => setEmail(e.target.value)} required />
                 </div>
-                <div className="input-group">
+                <div className={styles.inputGroup}>
                     <label htmlFor="senha">Senha</label>
                     <input type="password" name="senha" onChange={(e) => setPassword(e.target.value)} required />
                 </div>

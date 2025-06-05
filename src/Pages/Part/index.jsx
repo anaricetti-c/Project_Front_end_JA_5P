@@ -102,6 +102,9 @@ export default function Part() {
             </td>
 
             <td>{p.quantity}</td>
+            <td>
+              <img src="delete.png" alt="Deletar" className="icon"/>
+            </td>
           </tr>
         );
       });
@@ -137,6 +140,7 @@ export default function Part() {
           // "Progresso",
           "Status",
           "Quantidade",
+          ""
         ]}
       />
     </main>

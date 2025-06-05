@@ -36,7 +36,7 @@ export default function Material() {
         params: {
           // associations: ["customer", "created_by"],
           page: page,
-          limit: 9,
+          limit: 15,
         },
         // paramsSerializer: (params) =>
         //   qs.stringify(params, { arrayFormat: "repeat" }),
@@ -65,6 +65,9 @@ export default function Material() {
             <td>{creation_date}</td>
             <td>{m.stock_quantity}</td>
             <td>{m.unit_of_measure}</td>
+            <td>
+              <img src="delete.png" alt="Deletar" className="icon"/>
+            </td>
           </tr>
         );
       });
@@ -83,7 +86,7 @@ export default function Material() {
     <main className={styles.main}>
       <PaginatedTable
         total={total}
-        pageSize={9}
+        pageSize={15}
         loading={loading}
         getEntities={getMaterials}
         search={search}
@@ -98,6 +101,7 @@ export default function Material() {
           "Data de Criação",
           "Quantidade em Estoque",
           "Unidade de Medida",
+          ""
         ]}
       />
     </main>

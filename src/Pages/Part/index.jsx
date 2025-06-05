@@ -96,7 +96,7 @@ export default function Part() {
                 {material}
               </span>
             </td>
-            <td>{p.progress_percentage}%</td>
+            {/* <td>{p.progress_percentage}%</td> */}
             <td>
               <span className={`status status-${status}`}>{p.status}</span>
             </td>
@@ -134,8 +134,8 @@ export default function Part() {
           "Programa NC",
           "Modelo 3D",
           "Materiais",
+          // "Progresso",
           "Status",
-          "Progresso",
           "Quantidade",
         ]}
       />

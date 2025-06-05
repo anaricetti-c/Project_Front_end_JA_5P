@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 // import { Analytics } from "@vercel/analytics/react"
 import { UserProvider } from "./Context/user.jsx";
 import "./Styles/global.css";
+import "./Styles/tags.css"
+
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>

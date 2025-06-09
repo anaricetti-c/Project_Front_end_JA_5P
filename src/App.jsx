@@ -6,6 +6,7 @@ import "../src/styles/toaststyles.css";
 
 import Login from "./pages/Login";
 import Mold from "./pages/Mold";
+import MoldDetails from "./pages/MoldDetails";
 import Part from "./pages/Part";
 import Operation from "./pages/Operation";
 import Material from "./pages/Material";
@@ -26,6 +27,10 @@ export default function App() {
         <Route
           path="/molds"
           element={<ProtectedRoute targetPage={<Mold />} />}
+        />
+        <Route 
+          path="/mold/:id"
+          element={<ProtectedRoute targetPage={<MoldDetails />} />} 
         />
         <Route
           path="/parts"

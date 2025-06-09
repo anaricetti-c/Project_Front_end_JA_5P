@@ -10,6 +10,7 @@ import Part from "./pages/Part";
 import Operation from "./pages/Operation";
 import Material from "./pages/Material";
 import Machine from "./pages/Machine";
+import NotFoundPage from "./pages/NotFoundPage";
 import CustomNavBar from "./components/CustomNavBar";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
@@ -42,7 +43,7 @@ export default function App() {
           path="/machines"
           element={<ProtectedRoute targetPage={<Machine />} />}
         />
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
         position="top-right"

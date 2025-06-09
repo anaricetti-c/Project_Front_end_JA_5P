@@ -160,10 +160,10 @@ export default function Material() {
         ]}
       />
       <DeleteModal
-        confirmDeleteMold={confirmDeleteMaterial}
-        setMoldToDelete={setMaterialToDelete}
-        moldToDelete={materialToDelete}
-        model={"material"}
+        confirmDeleteEntity={confirmDeleteMaterial}
+        setEntityToDelete={setMaterialToDelete}
+        entityToDelete={materialToDelete}
+        entityName={"o material"}
       />
     </main>
   );

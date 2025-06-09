@@ -207,7 +207,7 @@ export default function Part() {
         confirmDeleteEntity={confirmDeletePart}
         setEntityToDelete={setPartToDelete}
         entityToDelete={partToDelete}
-        entityName={"part"}
+        entityName={"a peça"}
       />
     </main>
   );

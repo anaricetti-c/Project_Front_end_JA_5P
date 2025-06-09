@@ -1,4 +1,5 @@
 import qs from "qs";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
@@ -7,6 +8,7 @@ import styles from "./style.module.css";
 import { api } from "../../services/api";
 import { getHeaders } from "../../services/headers";
 import PaginatedTable from "../../components/PaginatedTable";
+import DeleteModal from "../../components/DeleteModal";
 
 export default function Operation() {
   const [loading, setLoading] = useState(false);
@@ -145,6 +147,12 @@ export default function Operation() {
         setPageSize={setPageSize}
         pageSize={pageSize}
         columns={["Código", "Nome", "Máquina", "Data de Criação", "", ""]}
+      />
+      <DeleteModal
+        confirmDeleteEntity={confirmDeleteOperation}
+        setEntityToDelete={setOperationToDelete}
+        entityToDelete={operationToDelete}
+        entityName={"a operação"}
       />
     </main>
   );

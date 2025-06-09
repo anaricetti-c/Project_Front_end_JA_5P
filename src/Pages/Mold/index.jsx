@@ -185,7 +185,7 @@ export default function Mold() {
         confirmDeleteEntity={confirmDeleteMold}
         setEntityToDelete={setMoldToDelete}
         entityToDelete={moldToDelete}
-        entityName={"mold"}
+        entityName={"o molde"}
       />
     </main>
   );

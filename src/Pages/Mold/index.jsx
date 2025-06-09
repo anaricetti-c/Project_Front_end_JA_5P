@@ -14,6 +14,7 @@ export default function Mold() {
   const [search, setSearch] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [pageSize, setPageSize] = useState(15);
 
   useEffect(() => {
     const page = Number(search.get("page"));
@@ -25,18 +26,26 @@ export default function Mold() {
   async function fetchMolds(page) {
     setLoading(true);
     try {
+      const field = search.get("field");
+      const value = search.get("value");
+
+      const requestParams = {
+        associations: ["customer", "created_by"],
+        limit: pageSize,
+        page: page,
+      };
+
+      if (field && value) {
+        requestParams.field = `mold.${field}`;
+        requestParams.value = value;
+      }
+
       const moldsResponse = await api.get(`/mold/all`, {
         headers: getHeaders(),
-        params: {
-          associations: ["customer", "created_by"],
-          page: page,
-          limit: 15,
-        },
+        params: requestParams,
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: "repeat" }),
       });
-
-      console.log(moldsResponse.data);
 
       const priorityOrder = {
         Urgent: 1,
@@ -44,12 +53,13 @@ export default function Mold() {
         Medium: 3,
         Low: 4,
       };
-      setTotal(moldsResponse.data.metadata.total);
 
       const sortedMolds = [...moldsResponse.data.data].sort((a, b) => {
         return priorityOrder[a.priority] - priorityOrder[b.priority];
       });
 
+      console.log(moldsResponse.data);
+      setTotal(moldsResponse.data.metadata.total);
       setMolds(sortedMolds);
     } catch (error) {
       console.error("Error fetching molds:", error);
@@ -85,7 +95,7 @@ export default function Mold() {
             <td>{m.progress_percentage}%</td>
             <td>{m.quantity}</td>
             <td>
-              <img src="delete.png" alt="Deletar" className="icon"/>
+              <img src="delete.png" alt="Deletar" className="icon" />
             </td>
           </tr>
         );
@@ -93,9 +103,7 @@ export default function Mold() {
     } else {
       return (
         <tr>
-          <td colSpan={8}>
-            Nenhum molde cadastrado.
-          </td>
+          <td colSpan={8}>Nenhum molde cadastrado.</td>
         </tr>
       );
     }
@@ -112,6 +120,8 @@ export default function Mold() {
         filters={"mold"}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
         columns={[
           "Código",
           "Cliente",
@@ -120,7 +130,7 @@ export default function Mold() {
           "Status",
           "Progresso",
           "Quantidade",
-          ""
+          "",
         ]}
       />
     </main>

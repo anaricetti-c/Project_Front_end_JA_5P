@@ -14,6 +14,7 @@ export default function Part() {
   const [search, setSearch] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [pageSize, setPageSize] = useState(15);
 
   useEffect(() => {
     const page = Number(search.get("page"));
@@ -25,24 +26,43 @@ export default function Part() {
   async function fetchParts(page) {
     setLoading(true);
     try {
+      const field = search.get("field");
+      const value = search.get("value");
+
+      // Cria os parâmetros da API diretamente
+      const requestParams = {
+        associations: [
+          "mold",
+          "operation_associations",
+          "material_associations",
+          "nc_program",
+          "model_3d",
+        ],
+        limit: pageSize,
+        page: page,
+      };
+
+      if (field && value) {
+        requestParams.field = `part.${field}`;
+        requestParams.value = value;
+
+        // // Limpa os parâmetros da URL
+        // setSearch((prev) => {
+        //   const newParams = new URLSearchParams(prev);
+        //   newParams.delete("field");
+        //   newParams.delete("value");
+        //   return newParams;
+        // });
+      }
+
       const partsResponse = await api.get(`/part/all`, {
         headers: getHeaders(),
-        params: {
-          associations: [
-            "mold",
-            "operation_associations",
-            "material_associations",
-            "nc_program",
-            "model_3d",
-          ],
-          page: page,
-          limit: 15,
-        },
+        params: requestParams,
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: "repeat" }),
       });
+
       setTotal(partsResponse.data.metadata.total);
-      console.log(partsResponse.data);
       setParts(partsResponse.data.data);
     } catch (error) {
       console.error("Error fetching parts:", error);
@@ -97,7 +117,7 @@ export default function Part() {
 
             <td>{p.quantity}</td>
             <td>
-              <img src="delete.png" alt="Deletar" className="icon"/>
+              <img src="delete.png" alt="Deletar" className="icon" />
             </td>
           </tr>
         );
@@ -105,9 +125,7 @@ export default function Part() {
     } else {
       return (
         <tr>
-          <td colSpan={9}>
-            Nenhuma peça cadastrada.
-          </td>
+          <td colSpan={9}>Nenhuma peça cadastrada.</td>
         </tr>
       );
     }
@@ -124,6 +142,8 @@ export default function Part() {
         filters={"part"}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
         columns={[
           "Molde",
           "Nome",
@@ -134,7 +154,7 @@ export default function Part() {
           // "Progresso",
           "Status",
           "Quantidade",
-          ""
+          "",
         ]}
       />
     </main>

@@ -1,6 +1,6 @@
 import qs from "qs";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import styles from "./style.module.css";
 
@@ -14,6 +14,13 @@ export default function Operation() {
   const [search, setSearch] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [pageSize, setPageSize] = useState(15);
+  const [operationToDelete, setOperationToDelete] = useState(null);
+  const navigate = useNavigate();
+
+  function handleDeleteClick(mold) {
+    setOperationToDelete(mold);
+  }
 
   useEffect(() => {
     const page = Number(search.get("page"));
@@ -25,24 +32,60 @@ export default function Operation() {
   async function fetchOperations(page) {
     setLoading(true);
     try {
+      const field = search.get("field");
+      const value = search.get("value");
+
+      const requestParams = {
+        associations: ["machine"],
+        limit: pageSize,
+        page: page,
+      };
+
+      if (field && value) {
+        requestParams.field = `operation.${field}`;
+        requestParams.value = value;
+      }
+
       const operationsResponse = await api.get(`/operation/all`, {
         headers: getHeaders(),
-        params: {
-          associations: ["machine"],
-          page: page,
-          limit: 10,
-        },
+        params: requestParams,
         paramsSerializer: (params) =>
           qs.stringify(params, { arrayFormat: "repeat" }),
       });
 
-      setTotal(operationsResponse.data.metadata.total);
       console.log(operationsResponse.data);
+      setTotal(operationsResponse.data.metadata.total);
       setOperations(operationsResponse.data.data);
     } catch (error) {
       console.error("Error fetching operations:", error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function confirmDeleteOperation() {
+    try {
+      await api.delete(`/operation/delete/${operationToDelete.id}`, {
+        headers: getHeaders(),
+      });
+
+      const currentPage = Number(search.get("page")) || 1;
+      const newTotal = total - 1;
+
+      const maxPage = Math.ceil(newTotal / pageSize);
+      const newPage = currentPage > maxPage ? maxPage : currentPage;
+
+      setSearch((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set("page", newPage);
+        newParams.set("refresh", Date.now().toString());
+        return newParams;
+      });
+
+      setOperationToDelete(null);
+    } catch (error) {
+      console.error("Erro ao deletar operação:", error);
+      toast.error("Erro ao deletar operação.");
     }
   }
 
@@ -61,7 +104,20 @@ export default function Operation() {
             <td>{machine}</td>
             <td>{creation_date}</td>
             <td>
-              <img src="delete.png" alt="Deletar" className="icon" />
+              <img
+                onClick={() => navigate(`/operation/${op.id}`)}
+                src="details.png"
+                alt="Detalhes"
+                className="icon"
+              />
+            </td>
+            <td>
+              <img
+                onClick={() => handleDeleteClick(op)}
+                src="delete.png"
+                alt="Deletar"
+                className="icon"
+              />
             </td>
           </tr>
         );
@@ -69,7 +125,7 @@ export default function Operation() {
     } else {
       return (
         <tr>
-          <td colSpan={5}>Nenhuma operação cadastrada.</td>
+          <td colSpan={6}>Nenhuma operação cadastrada.</td>
         </tr>
       );
     }
@@ -83,10 +139,12 @@ export default function Operation() {
         getEntities={getOperations}
         search={search}
         setSearch={setSearch}
-        filters={"operations"}
+        filters={"operation"}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
-        columns={["Código", "Nome", "Máquina", "Data de Criação", ""]}
+        setPageSize={setPageSize}
+        pageSize={pageSize}
+        columns={["Código", "Nome", "Máquina", "Data de Criação", "", ""]}
       />
     </main>
   );

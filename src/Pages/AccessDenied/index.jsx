@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from "./style.module.css";
-import { BsShieldLockFill } from "react-icons/bs"; // ou qualquer outro ícone
+import { BsShieldLockFill } from "react-icons/bs";
 
 export default function AccessDenied() {
   return (

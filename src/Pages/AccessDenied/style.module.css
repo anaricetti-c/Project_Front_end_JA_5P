@@ -48,7 +48,7 @@
   text-align: center;
 }
 
-.loginButton {
+/* .loginButton {
   padding: 10px 20px;
   background-color: #2f5936;
   color: white;
@@ -64,7 +64,24 @@
 
 .loginButton:hover {
   background-color: #264b2d;
+} */
+
+.loginButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
+
+.loginButton:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
 
 @keyframes pulse {
   0% { transform: scale(1); }

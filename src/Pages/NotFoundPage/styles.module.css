@@ -1,0 +1,53 @@
+.notFoundContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 92vh;
+  background-color: #f4f4f4;
+  padding: 1rem;
+}
+
+.notFoundCard {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.errorCode {
+  font-size: 5rem;
+  color: #dc3545;
+  margin: 0;
+}
+
+.message {
+  font-size: 1.5rem;
+  color: #333;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.subMessage {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.5rem 0 2rem;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.homeButton:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}

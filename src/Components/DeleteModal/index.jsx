@@ -13,7 +13,7 @@ export default function DeleteModal({
       <div className={styles.modal}>
         <h3>Confirmar exclusão</h3>
         <p>
-          Tem certeza que deseja excluir o {entityName}{" "}
+          Tem certeza que deseja excluir {entityName}{" "}
           <strong>{entityToDelete.name}</strong>?
         </p>
         <div className={styles.modalActions}>

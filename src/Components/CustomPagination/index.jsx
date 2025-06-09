@@ -10,7 +10,11 @@ export default function CustomPagination({
   paginationStyle = defaultPaginationStyle,
 }) {
   const handlePageChange = (_, page) => {
-    setSearch({ page: page.toString() });
+    setSearch((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("page", page.toString());
+      return newParams;
+    });
   };
   return (
     <Pagination

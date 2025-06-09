@@ -35,7 +35,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 } */
 
-
 .adicionar {
   background-color: #3d9970;
 }
@@ -71,7 +70,7 @@
   border-radius: 8px 0 0 8px;
   outline: none;
   font-size: 14px;
-  height: 40px;
+  height: 38px;
   width: 320px;
 }
 
@@ -82,7 +81,7 @@
   padding: 10px 14px;
   border-radius: 0 8px 8px 0;
   cursor: pointer;
-  height: 40px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,4 +132,34 @@
 
 .dataTable tbody tr:hover {
   background-color: #f1f3f5;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.paginationInfo {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 15%;
+  gap: 10px;
+}
+
+.paginationInfo select {
+  margin-left: 8px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+
+.totalLabel{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 5px;
+  padding: 10px;
 }

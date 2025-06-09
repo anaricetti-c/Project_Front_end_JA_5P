@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import CustomSelect from "../CustomSelect";
 import CustomPagination from "../CustomPagination";
@@ -16,7 +17,9 @@ export default function PaginatedTable({
   filters,
   columns = [],
   pageSize = 15,
+  setPageSize,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (!search.get("page")) {
@@ -24,15 +27,30 @@ export default function PaginatedTable({
     }
   }, [search, setSearch]);
 
+  const handleSearch = () => {
+    if (!selectedFilter) {
+      toast.error("Por favor, selecione um filtro antes de pesquisar.");
+      return;
+    }
+
+    setSearch((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("page", "1");
+      newParams.set("field", selectedFilter);
+      newParams.set("value", searchTerm.trim());
+      return newParams;
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
         <button className={`${styles.button} ${styles.adicionar}`}>
           Adicionar
         </button>
-        <button className={`${styles.button} ${styles.importar}`}>
+        {/* <button className={`${styles.button} ${styles.importar}`}>
           Importar
-        </button>
+        </button> */}
         {/* <button className={`${styles.button} ${styles.relatorios}`}>
             Relatórios
           </button> */}
@@ -44,8 +62,13 @@ export default function PaginatedTable({
             model={filters}
           />
 
-          <input type="text" placeholder="" />
-          <button className={styles.searchButton}>
+          <input
+            type="text"
+            placeholder="Pesquisar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button className={styles.searchButton} onClick={handleSearch}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -74,7 +97,44 @@ export default function PaginatedTable({
         </table>
       </div>
       {!loading && (
-        <CustomPagination pageSize={pageSize} search={search} setSearch={setSearch} total={total} />
+        <div className={styles.paginationContainer}>
+          <div className={styles.paginationInfo}>
+      
+          </div>
+          <CustomPagination
+            pageSize={pageSize}
+            search={search}
+            setSearch={setSearch}
+            total={total}
+          />
+          <div className={styles.paginationInfo}>
+            <label>
+              <select
+                value={pageSize}
+                onChange={(e) => {
+                  const newSize = parseInt(e.target.value);
+                  setPageSize(newSize);
+                  
+                  setSearch((prev) => {
+                    const newParams = new URLSearchParams(prev);
+                    newParams.set("page", "1");
+                    newParams.set("refresh", Date.now().toString());
+                    return newParams;
+                  });
+                }}
+              >
+                {[10, 15, 25, 50].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <span className={styles.totalLabel}>
+              Total: <strong>{total}</strong>
+            </span>
+          </div>
+        </div>
       )}
     </div>
   );

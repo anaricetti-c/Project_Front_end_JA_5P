@@ -40,7 +40,9 @@ export default function CustomSelect({
         params: { model },
       });
 
-      const sortedFilters = sortFieldsByDotPriority(filtersResponse.data.filter_fields);
+      const sortedFilters = sortFieldsByDotPriority(
+        filtersResponse.data.filter_fields
+      );
       setFilters(sortedFilters);
     } catch (error) {
       console.error("Erro ao buscar filtros:", error);
@@ -63,10 +65,16 @@ export default function CustomSelect({
           },
         },
       }}
+      renderValue={(selected) => {
+        if (!selected) {
+          return <em>Filtro</em>; // texto padrão quando nada estiver selecionado
+        }
+        return formatText(selected);
+      }}
     >
-      <MenuItem value="" sx={{ fontStyle: "italic", color: "#777" }}>
+      {/* <MenuItem value="" sx={{ fontStyle: "italic", color: "#777" }}>
         {defaultText}
-      </MenuItem>
+      </MenuItem> */}
 
       {filters.length > 0 ? (
         filters.map((f) => (

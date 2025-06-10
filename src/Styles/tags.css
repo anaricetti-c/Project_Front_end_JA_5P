@@ -1,9 +1,9 @@
 /* Status e prioridade */
 .priority,
-.status {
+.status,
+.role {
   display: inline-block;
-  min-width: 100px;
-  padding: 6px 10px;
+  
   border-radius: 6px;
   font-weight: 600;
   font-size: 13px;
@@ -11,36 +11,44 @@
   text-transform: capitalize;
 }
 
+.priority,
+.status{
+  padding: 6px 10px;
+  min-width: 100px;
+}
+
+.role {
+  padding: 1px 5px;
+  min-width: 70px;
+}
 .status-pending, .status-under-maintenance {
   background-color: #fff3cd;
   color: #856404;
 }
 
-.status-progress {
+.status-progress, .role-editor{
   background-color: #d1ecf1;
   color: #0c5460;
 }
 
 .status-completed,
 .status-approved,
-.status-available {
+.status-available,
+.priority-low,
+.role-user {
   background-color: #d4edda;
   color: #155724;
 }
 
-.priority-low {
-  background-color: #c8e6c9;
-  color: #2e7d32;
-}
 
 .priority-medium {
   background-color: #ffe0b2;
   color: #974706;
 }
 
-.priority-high, .status-out-of-service {
+.priority-high, .status-out-of-service, .role-admin {
   background-color: #ffcdd2;
-  color: #b30b0b;
+  color: #a30808;
 }
 
 .priority-urgent {

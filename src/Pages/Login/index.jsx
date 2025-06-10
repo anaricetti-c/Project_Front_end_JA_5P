@@ -54,7 +54,7 @@ export default function Login() {
                     <label htmlFor="senha">Senha</label>
                     <input type="password" name="senha" onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button onClick={(e) => handleLogin(e)} type="submit">Entrar</button>
+                <button className={styles.submit} onClick={(e) => handleLogin(e)} type="submit">Entrar</button>
             </div>
         </main>
     )

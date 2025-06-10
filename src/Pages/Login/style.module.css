@@ -67,7 +67,7 @@ main {
 }
 
 /* Botão */
-button[type="submit"] {
+.submit {
   background-color: #2f5936;
   color: white;
   padding: 14px;
@@ -79,12 +79,12 @@ button[type="submit"] {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button[type="submit"]:hover {
+.submit:hover {
   background-color: #264b2d;
   transform: translateY(-1px);
 }
 
-button[type="submit"]:active {
+.submit:active {
   transform: scale(0.98);
 }
 

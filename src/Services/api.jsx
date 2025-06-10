@@ -18,7 +18,6 @@ api.interceptors.response.use(
           {},
           { withCredentials: true }
         );
-        console.log("AAAAAAAAAAAAAAAAAAAAA")
         sessionStorage.setItem("@ACCESS_TOKEN", data.access_token);
 
         // Atualiza o Authorization do request original

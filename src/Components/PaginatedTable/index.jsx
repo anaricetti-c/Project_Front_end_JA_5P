@@ -19,6 +19,7 @@ export default function PaginatedTable({
   columns = [],
   pageSize = 15,
   setPageSize,
+  setShowModal = () => null
 }) {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -56,7 +57,7 @@ export default function PaginatedTable({
           </button> */}
 
         <div className={styles.searchBar}>
-          <button className={`${styles.button} ${styles.adicionar}`}>
+          <button onClick={() => setShowModal(true)} className={`${styles.button} ${styles.adicionar}`}>
             Adicionar
           </button>
           <CustomSelect

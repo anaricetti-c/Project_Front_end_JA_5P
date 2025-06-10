@@ -8,6 +8,7 @@ import styles from "./style.module.css";
 import { api } from "../../services/api";
 import { getHeaders } from "../../services/headers";
 import PaginatedTable from "../../components/PaginatedTable";
+import GenericCreateModal from "../../components/GenericCreateModal";
 import DeleteModal from "../../components/DeleteModal";
 
 export default function Mold() {
@@ -18,7 +19,87 @@ export default function Mold() {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [pageSize, setPageSize] = useState(15);
   const [moldToDelete, setMoldToDelete] = useState(null);
+  const [customers, setCustomers] = useState([]);
+  const [modalFields, setModalFields] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await api.get("/customer/all", {
+        headers: getHeaders(),
+        params: { limit: 999, page: 1 },
+      });
+      console.log(data.data);
+      setCustomers(data.data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (customers.length) {
+      setModalFields(getMoldFields(customers));
+    }
+  }, [customers]);
+
+  function getMoldFields(customers) {
+    return [
+      {
+        name: "delivery_date",
+        label: "Data de Entrega",
+        type: "date",
+        required: true,
+      },
+      {
+        name: "quantity",
+        label: "Quantidade",
+        type: "number",
+        required: false,
+      },
+      {
+        name: "dimensions",
+        label: "Dimensões",
+        type: "text",
+        required: false,
+        placeholder: "Ex: 30x40x50",
+      },
+      {
+        name: "customer_id",
+        label: "Cliente",
+        type: "select",
+        options: customers.map((c) => ({
+          label: `${c.full_name} (${c.country_code})`,
+          value: c.id,
+        })),
+        required: true,
+      },
+    ];
+  }
+
+  const handleCreateMold = async (data) => {
+    try {
+      const normalizedData = {
+        ...data,
+        quantity: data.quantity ? Number(data.quantity) : undefined,
+      };
+
+      await api.post("/mold/register", normalizedData, {
+        headers: getHeaders(),
+      });
+
+      toast.success("Molde criado com sucesso!");
+      setShowModal(false);
+
+      setSearch((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set("page", 1);
+        newParams.set("refresh", Date.now().toString());
+        return newParams;
+      });
+    } catch (error) {
+      console.error("Erro ao criar molde:", error);
+      toast.error("Erro ao criar molde.");
+    }
+  };
 
   function handleDeleteClick(mold) {
     setMoldToDelete(mold);
@@ -44,7 +125,7 @@ export default function Mold() {
       };
 
       if (field && value) {
-        requestParams.field = field.includes(".") ? field : `mold.${field}`;;
+        requestParams.field = field.includes(".") ? field : `mold.${field}`;
         requestParams.value = value;
       }
       console.log(requestParams);
@@ -166,6 +247,7 @@ export default function Mold() {
         getEntities={getMolds}
         search={search}
         setSearch={setSearch}
+        setShowModal={setShowModal}
         filters={"mold"}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
@@ -188,6 +270,14 @@ export default function Mold() {
         setEntityToDelete={setMoldToDelete}
         entityToDelete={moldToDelete}
         entityName={"o molde"}
+      />
+
+      <GenericCreateModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onSubmit={handleCreateMold}
+        title="Criar Molde"
+        fields={modalFields}
       />
     </main>
   );

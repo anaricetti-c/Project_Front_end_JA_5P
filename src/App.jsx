@@ -15,6 +15,7 @@ import User from "./pages/User";
 import NotFoundPage from "./pages/NotFoundPage";
 import CustomNavBar from "./components/CustomNavBar";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import Customer from "./pages/Customer";
 
 export default function App() {
   const location = useLocation();
@@ -52,6 +53,10 @@ export default function App() {
         <Route
           path="/users"
           element={<ProtectedRoute targetPage={<User />} />}
+        />
+        <Route
+          path="/customers"
+          element={<ProtectedRoute targetPage={<Customer />} />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

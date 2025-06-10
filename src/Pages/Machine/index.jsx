@@ -50,11 +50,7 @@ export default function Machine() {
 
       const machinesResponse = await api.get(`/machine/all`, {
         headers: getHeaders(),
-        params: {
-          // associations: ["machine"],
-          page: page,
-          limit: 10,
-        },
+        params: requestParams,
         // paramsSerializer: (params) =>
         //   qs.stringify(params, { arrayFormat: "repeat" }),
       });
@@ -142,12 +138,15 @@ export default function Machine() {
   return (
     <main className={styles.main}>
       <PaginatedTable
+        tableName="Máquinas"
         total={total}
         loading={loading}
         getEntities={getMachines}
         search={search}
         setSearch={setSearch}
         filters={"machine"}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
         columns={["Código", "Nome", "Status", "", ""]}

@@ -138,6 +138,7 @@ export default function Material() {
   return (
     <main className={styles.main}>
       <PaginatedTable
+        tableName="Materiais"
         total={total}
         loading={loading}
         getEntities={getMaterials}

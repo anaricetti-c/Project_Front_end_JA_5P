@@ -159,6 +159,7 @@ export default function Mold() {
   return (
     <main className={styles.main}>
       <PaginatedTable
+        tableName="Moldes"
         total={total}
         loading={loading}
         getEntities={getMolds}

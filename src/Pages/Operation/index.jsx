@@ -136,6 +136,7 @@ export default function Operation() {
   return (
     <main className={styles.main}>
       <PaginatedTable
+        tableName="Operações"
         total={total}
         loading={loading}
         getEntities={getOperations}

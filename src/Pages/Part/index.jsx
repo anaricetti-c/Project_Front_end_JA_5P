@@ -179,6 +179,7 @@ export default function Part() {
   return (
     <main className={styles.main}>
       <PaginatedTable
+        tableName="Peças"
         total={total}
         loading={loading}
         getEntities={getParts}

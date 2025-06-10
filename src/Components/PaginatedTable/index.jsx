@@ -7,6 +7,7 @@ import CustomPagination from "../CustomPagination";
 import styles from "./style.module.css";
 
 export default function PaginatedTable({
+  tableName = "",
   loading,
   getEntities,
   selectedFilter,
@@ -45,9 +46,8 @@ export default function PaginatedTable({
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
-        <button className={`${styles.button} ${styles.adicionar}`}>
-          Adicionar
-        </button>
+        <h2 className={styles.tableName}>{tableName}</h2>
+
         {/* <button className={`${styles.button} ${styles.importar}`}>
           Importar
         </button> */}
@@ -56,6 +56,9 @@ export default function PaginatedTable({
           </button> */}
 
         <div className={styles.searchBar}>
+          <button className={`${styles.button} ${styles.adicionar}`}>
+            Adicionar
+          </button>
           <CustomSelect
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
@@ -98,9 +101,7 @@ export default function PaginatedTable({
       </div>
       {!loading && (
         <div className={styles.paginationContainer}>
-          <div className={styles.paginationInfo}>
-      
-          </div>
+          <div className={styles.paginationInfo}></div>
           <CustomPagination
             pageSize={pageSize}
             search={search}
@@ -114,7 +115,7 @@ export default function PaginatedTable({
                 onChange={(e) => {
                   const newSize = parseInt(e.target.value);
                   setPageSize(newSize);
-                  
+
                   setSearch((prev) => {
                     const newParams = new URLSearchParams(prev);
                     newParams.set("page", "1");

@@ -14,7 +14,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const { data } = await api.post(
-          "/refresh-token",
+          "/refresh_token",
           {},
           { withCredentials: true }
         );

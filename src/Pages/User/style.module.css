@@ -1,37 +1,24 @@
-.container {
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.main {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 30px;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
 }
 
 .card {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  background-color: #fdfdfd;
-  border: 1px solid #e2e6ea;
+  background-color: #ffffff;
+  border: 1px solid #dcdfe2;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 100%;
-  min-height: 220px; /* Garante altura mínima para flex funcionar */
-}
-
-.createdAt {
-  margin-top: auto;
-  font-size: 13px;
-  color: #6c757d;
-  border-top: 1px solid #eee;
-  padding-top: 12px;
+  height: 240px; /* Garante altura mínima para flex funcionar */
 }
 
 .card:hover {
@@ -51,4 +38,12 @@
   font-size: 14px;
   color: #444;
   line-height: 1.4;
+}
+
+.createdAt {
+  margin-top: auto;
+  font-size: 13px;
+  color: #6c757d;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
 }

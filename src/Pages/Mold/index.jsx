@@ -44,9 +44,10 @@ export default function Mold() {
       };
 
       if (field && value) {
-        requestParams.field = `mold.${field}`;
+        requestParams.field = field.includes(".") ? field : `mold.${field}`;;
         requestParams.value = value;
       }
+      console.log(requestParams);
 
       const moldsResponse = await api.get(`/mold/all`, {
         headers: getHeaders(),
@@ -112,7 +113,7 @@ export default function Mold() {
           m.status === "In Progress" ? "progress" : m.status.toLowerCase();
         const customer_info = m.customer
           ? `${m.customer.full_name} ${m.customer.country_name}`
-          : "Cliente não informado";
+          : "Customere não informado";
         return (
           <tr key={m.id}>
             <td>{m.name}</td>
@@ -172,7 +173,7 @@ export default function Mold() {
         pageSize={pageSize}
         columns={[
           "Código",
-          "Cliente",
+          "Customere",
           "Prioridade",
           "Prazo",
           "Status",

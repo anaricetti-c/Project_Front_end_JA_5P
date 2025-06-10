@@ -42,6 +42,7 @@ export const NavContainer = styled.nav`
 
 export const Menu = styled.ul`
   display: flex;
+  align-items: center;
   gap: 15px;
   list-style: none;
   margin: 0;
@@ -50,6 +51,7 @@ export const Menu = styled.ul`
 
 export const Dropdown = styled.li`
   position: relative;
+  margin: 0;
 `;
 
 export const DropdownToggle = styled.button`
@@ -61,6 +63,10 @@ export const DropdownToggle = styled.button`
   cursor: pointer;
   padding: 10px 12px;
   transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  height: 100%;
 
   &:hover,
   &:focus {

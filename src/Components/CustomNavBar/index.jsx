@@ -77,8 +77,8 @@ export default function CustomNavBar() {
             </DropdownToggle>
             {openDropdown === "gestao" && (
               <DropdownMenu>
-                <MenuItem to="/clients" onClick={handleMenuItemClick}>
-                  Clientes
+                <MenuItem to="/customers" onClick={handleMenuItemClick}>
+                  Customers
                 </MenuItem>
                 <MenuItem to="/users" onClick={handleMenuItemClick}>
                   Usuários

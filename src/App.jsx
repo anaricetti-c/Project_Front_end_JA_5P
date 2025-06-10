@@ -11,6 +11,7 @@ import Part from "./pages/Part";
 import Operation from "./pages/Operation";
 import Material from "./pages/Material";
 import Machine from "./pages/Machine";
+import User from "./pages/User";
 import NotFoundPage from "./pages/NotFoundPage";
 import CustomNavBar from "./components/CustomNavBar";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -47,6 +48,10 @@ export default function App() {
         <Route
           path="/machines"
           element={<ProtectedRoute targetPage={<Machine />} />}
+        />
+        <Route
+          path="/users"
+          element={<ProtectedRoute targetPage={<User />} />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

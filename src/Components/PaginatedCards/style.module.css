@@ -80,11 +80,9 @@
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colunas fixas */
-  grid-auto-rows: minmax(auto, 1fr); /* permite altura automática */
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: 5px;
-  min-height: calc(2 * 250px); /* altura mínima p/ 2 linhas + 1 gap */
 }
 
 

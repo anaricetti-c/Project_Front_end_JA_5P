@@ -12,6 +12,8 @@ export default function PaginatedCards({
   getCards,
   selectedFilter,
   setSelectedFilter,
+  rows = 2,
+  columns = 3,
   search,
   setSearch,
   total,
@@ -77,7 +79,11 @@ export default function PaginatedCards({
         </div>
       </div>
 
-      <div className={styles.cardGrid}>
+      <div style={
+        { 
+          gridTemplateRows: `repeat(${rows}, 1fr)`, 
+          gridTemplateColumns: `repeat(${columns}, 1fr)`
+        }} className={styles.cardGrid}>
         {!loading && getCards()}
       </div>
 

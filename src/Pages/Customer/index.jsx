@@ -10,28 +10,28 @@ import CustomPagination from "../../components/CustomPagination";
 import CustomSelect from "../../components/CustomSelect";
 import PaginatedCards from "../../components/PaginatedCards";
 
-export default function User() {
+export default function Customer() {
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useSearchParams();
   const [total, setTotal] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const navigate = useNavigate();
 
-  // const [userToDelete, setUserToDelete] = useState(null);
-  // const navigate = useNavigate();
+  // const [customerToDelete, setCustomerToDelete] = useState(null);
 
   // function handleDeleteClick(mold) {
-  //   setUserToDelete(mold);
+  //   setCustomerToDelete(mold);
   // }
 
   useEffect(() => {
     const page = Number(search.get("page"));
     if (page) {
-      fetchUsers(page);
+      fetchCustomers(page);
     }
   }, [search]);
 
-  async function fetchUsers(page) {
+  async function fetchCustomers(page) {
     setLoading(true);
     try {
       const field = search.get("field");
@@ -44,79 +44,88 @@ export default function User() {
       };
 
       if (field && value) {
-        requestParams.field = `user.${field}`;
+        requestParams.field = `customer.${field}`;
         requestParams.value = value;
       }
 
-      const usersResponse = await api.get(`/user/all`, {
+      const customersResponse = await api.get(`/customer/all`, {
         headers: getHeaders(),
         params: requestParams,
         // paramsSerializer: (params) =>
         //   qs.stringify(params, { arrayFormat: "repeat" }),
       });
 
-      console.log(usersResponse.data);
-      setTotal(usersResponse.data.metadata.total);
-      setUsers(usersResponse.data.data);
+      console.log(customersResponse.data);
+      setTotal(customersResponse.data.metadata.total);
+      setCustomers(customersResponse.data.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching customers:", error);
     } finally {
       setLoading(false);
     }
   }
 
-  function getUsers() {
-    if (Array.isArray(users) && users.length > 0) {
-      return users.map((u) => {
+  const handleSearch = (customer) => {
+    const params = new URLSearchParams({
+      page: 1,
+      limit: 15,
+      associations: ["customer", "created_by"],
+      field: "customer.full_name",
+      value: customer.full_name.trim(),
+    });
+
+    navigate(`/molds?${params.toString()}`);
+  };
+
+  function getCustomers() {
+    if (Array.isArray(customers) && customers.length > 0) {
+      return customers.map((c) => {
         return (
-          <div key={u.id} className={styles.card}>
+          <div key={c.id} className={styles.card}>
             <div className={styles.titleRow}>
-              <h2>{u.full_name}</h2>
+              <h2>{c.full_name}</h2>
               <div className={styles.cardActions}>
                 <img
-                  onClick={() => navigate(`/user/${u.id}`)}
-                  src="details.png"
-                  alt="Detalhes"
+                  onClick={() => handleSearch(c)}
+                  src="lupa.png"
+                  alt="Pesquisar"
                   className={styles.icon}
                 />
                 <img
-                  onClick={() => handleDeleteClick(u)}
+                  onClick={() => handleDeleteClick(c)}
                   src="delete.png"
                   alt="Deletar"
                   className={styles.icon}
                 />
               </div>
             </div>
+
             <p>
-              <strong>Email:</strong> {u.email}
+              <strong>País:</strong> {c.country_name} {" - "} {c.country_code}
             </p>
-            <p>
-              <strong>Matrícula:</strong> {u.registration_number}
-            </p>
-            <p>
-              <strong>Cargo:</strong> <span className={`role role-${u.role.toLowerCase()}`}>{u.role}</span>
-            </p>
+
             <p className={styles.createdAt}>
               <small>
-                Criado em: {new Date(u.created_at).toLocaleDateString()}
+                Criado em: {new Date(c.created_at).toLocaleDateString()}
               </small>
             </p>
           </div>
         );
       });
     } else {
-      return <div className={styles.empty}>Nenhum usuário cadastrado.</div>;
+      return <div className={styles.empty}>Nenhum cliente cadastrado.</div>;
     }
   }
 
   return (
     <main className={styles.main}>
       <PaginatedCards
-        title="Usuários"
-        filters={"user"}
-        getCards={getUsers}
+        title="Clientes"
+        filters={"customer"}
+        getCards={getCustomers}
         loading={loading}
         search={search}
+        rows={3}
         selectedFilter={selectedFilter}
         setSearch={setSearch}
         setSelectedFilter={setSelectedFilter}

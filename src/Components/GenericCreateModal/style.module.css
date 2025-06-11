@@ -67,16 +67,86 @@
 }
 
 .inputGroup input,
-.inputGroup select {
+.inputGroup select,
+.inputGroup textarea {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
   transition: border 0.2s;
+  width: 100%;
+  resize: none;
+}
+
+/* Esconde o checkbox nativo */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Label principal */
+.container {
+  display: flex; /* organiza texto + checkbox */
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  cursor: pointer;
+  font-size: 1rem; /* menor fonte */
+  user-select: none;
+}
+
+.checkmark {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  background: #fbfbfb;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #3d9970;
+  border: 1px solid #36865f;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.inputGroup input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3d9970;
+  cursor: pointer;
 }
 
 .inputGroup input:focus,
-.inputGroup select:focus {
+.inputGroup select:focus,
+.inputGroup textarea:focus {
   border-color: #3d9970;
   outline: none;
 }
@@ -119,4 +189,32 @@
 
 .save:hover {
   background-color: #36865f;
+}
+
+.autocompleteWrapper {
+  position: relative;
+}
+
+.optionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.optionsList li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.optionsList li:hover {
+  background-color: #f0f0f0;
 }

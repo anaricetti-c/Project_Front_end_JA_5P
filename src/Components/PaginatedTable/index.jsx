@@ -8,20 +8,19 @@ import styles from "./style.module.css";
 
 export default function PaginatedTable({
   tableName = "",
+  total,
   loading,
   getEntities,
-  selectedFilter,
-  setSelectedFilter,
   search,
   setSearch,
-  total,
+  setShowModal = () => null,
   filters,
-  columns = [],
   pageSize = 15,
   setPageSize,
-  setShowModal = () => null
+  columns = [],
 }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
     if (!search.get("page")) {
@@ -48,14 +47,6 @@ export default function PaginatedTable({
     <div className={styles.container}>
       <div className={styles.actions}>
         <h2 className={styles.tableName}>{tableName}</h2>
-
-        {/* <button className={`${styles.button} ${styles.importar}`}>
-          Importar
-        </button> */}
-        {/* <button className={`${styles.button} ${styles.relatorios}`}>
-            Relatórios
-          </button> */}
-
         <div className={styles.searchBar}>
           <button onClick={() => setShowModal(true)} className={`${styles.button} ${styles.adicionar}`}>
             Adicionar

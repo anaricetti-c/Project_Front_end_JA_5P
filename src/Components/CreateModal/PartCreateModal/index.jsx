@@ -69,7 +69,6 @@ export default function PartCreateModal({ open, onClose, onSubmit }) {
       return;
     }
     console.log(formData);
-    console.log("AAAAAAAAAAAA");
 
     onSubmit({ ...formData, mold_id: selectedMold.id });
     setSelectedMold(null);

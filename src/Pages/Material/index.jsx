@@ -1,135 +1,91 @@
-// import qs from "qs";
-import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import styles from "./style.module.css";
 
-import { api } from "../../services/api";
-import { getHeaders } from "../../services/headers";
 import PaginatedTable from "../../components/PaginatedTable";
+import MaterialRow from "../../components/Rows/MaterialRow";
 import DeleteModal from "../../components/DeleteModal";
+import MaterialCreateModal from "../../components/CreateModal/MaterialCreateModal";
+
+import useMaterials from "../../hooks/useMaterials";
 
 export default function Material() {
-  const [loading, setLoading] = useState(false);
-  const [materials, setMaterials] = useState([]);
   const [search, setSearch] = useSearchParams();
-  const [total, setTotal] = useState(0);
-  const [selectedFilter, setSelectedFilter] = useState("");
+  const [showCreate, setShowCreate] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const [pageSize, setPageSize] = useState(15);
-  const [materialToDelete, setMaterialToDelete] = useState(null);
   const navigate = useNavigate();
 
-  function handleDeleteClick(material) {
-    setMaterialToDelete(material);
-  }
+  const {
+    materials,
+    total,
+    loading,
+    fetchMaterials,
+    removeMaterial,
+    createNewMaterial,
+  } = useMaterials(pageSize);
 
   useEffect(() => {
-    const page = Number(search.get("page"));
-    if (page) {
-      fetchMaterials(page);
-    }
-  }, [search]);
+    const page = Number(search.get("page") || 1);
+    const field = search.get("field") || null;
+    const value = search.get("value") || null;
+    fetchMaterials({ page, field, value });
+  }, [search, pageSize, fetchMaterials]);
 
-  async function fetchMaterials(page) {
-    setLoading(true);
+  const handleDelete = (m) => setDeleteTarget(m);
+
+  const confirmDelete = async () => {
+    await removeMaterial(deleteTarget);
+    const currentPage = Number(search.get("page")) || 1;
+    const newTotal = total - 1;
+
+    const maxPage = Math.ceil(newTotal / pageSize);
+    const newPage = currentPage > maxPage ? maxPage : currentPage;
+    console.log("AAAA")
+    setSearch((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("page", newPage);
+      newParams.set("refresh", Date.now().toString());
+      return newParams;
+    });
+    setDeleteTarget(null);
+  };
+
+  const onCreate = async (formData) => {
     try {
-      const field = search.get("field");
-      const value = search.get("value");
+      // await createNewMaterial(formData);
 
-      const requestParams = {
-        // associations: ["customer", "created_by"],
-        limit: pageSize,
-        page: page,
-      };
+      toast.success("Material criada com sucesso!");
+      setShowCreate(false);
 
-      if (field && value) {
-        requestParams.field = `material.${field}`;
-        requestParams.value = value;
-      }
-
-      const materialsResponse = await api.get(`/material/all`, {
-        headers: getHeaders(),
-        params: requestParams,
-        // paramsSerializer: (params) =>
-        //   qs.stringify(params, { arrayFormat: "repeat" }),
+      setSearch((prev) => {
+        const p = new URLSearchParams(prev);
+        p.set("page", 1);
+        p.set("refresh", Date.now().toString());
+        return p;
       });
-
-      console.log(materialsResponse.data);
-      setTotal(materialsResponse.data.metadata.total);
-      setMaterials(materialsResponse.data.data);
     } catch (error) {
-      console.error("Error fetching materials:", error);
-    } finally {
-      setLoading(false);
+      console.error("Erro ao criar material:", error);
+      toast.error("Erro ao criar material.");
     }
-  }
+  };
 
-  async function confirmDeleteMaterial() {
-      try {
-        await api.delete(`/material/delete/${materialToDelete.id}`, {
-          headers: getHeaders(),
-        });
-  
-        const currentPage = Number(search.get("page")) || 1;
-        const newTotal = total - 1;
-  
-        const maxPage = Math.ceil(newTotal / pageSize);
-        const newPage = currentPage > maxPage ? maxPage : currentPage;
-  
-        setSearch((prev) => {
-          const newParams = new URLSearchParams(prev);
-          newParams.set("page", newPage);
-          newParams.set("refresh", Date.now().toString());
-          return newParams;
-        });
-  
-        setMaterialToDelete(null);
-      } catch (error) {
-        console.error("Erro ao deletar material:", error);
-        toast.error("Erro ao deletar material.");
-      }
-    }
-
-  function getMaterials() {
+  function getMaterialRows() {
     if (Array.isArray(materials) && materials.length > 0) {
-      return materials.map((m, index) => {
-        const dateString = m.created_at;
-        const date = new Date(dateString);
-        const creation_date = date.toLocaleDateString("pt-BR");
-        return (
-          <tr key={index}>
-            <td>{m.name}</td>
-            <td>{m.description}</td>
-            <td>{m.lead_time}</td>
-            <td>{creation_date}</td>
-            <td>{m.stock_quantity}</td>
-            <td>{m.unit_of_measure}</td>
-            <td>
-              <img
-                onClick={() => navigate(`/material/${m.id}`)}
-                src="details.png"
-                alt="Detalhes"
-                className="icon"
-              />
-            </td>
-            <td>
-              <img
-                onClick={() => handleDeleteClick(m)}
-                src="delete.png"
-                alt="Deletar"
-                className="icon"
-              />
-            </td>
-          </tr>
-        );
-      });
+      return materials.map((m) => (
+        <MaterialRow
+          key={m.id}
+          material={m}
+          onDetails={() => navigate(`/material/${m.id}`)}
+          onDelete={() => handleDelete(m)}
+        />
+      ));
     } else {
       return (
         <tr>
-          <td colSpan={8}>
-            Nenhum material cadastrado.
-          </td>
+          <td colSpan={9}>Nenhum material cadastrada.</td>
         </tr>
       );
     }
@@ -141,14 +97,13 @@ export default function Material() {
         tableName="Materiais"
         total={total}
         loading={loading}
-        getEntities={getMaterials}
+        getEntities={() => getMaterialRows()}
         search={search}
         setSearch={setSearch}
+        setShowModal={() => setShowCreate(true)}
+        filters={"material"}
         pageSize={pageSize}
         setPageSize={setPageSize}
-        filters={"material"}
-        selectedFilter={selectedFilter}
-        setSelectedFilter={setSelectedFilter}
         columns={[
           "Código",
           "Descrição",
@@ -161,10 +116,15 @@ export default function Material() {
         ]}
       />
       <DeleteModal
-        confirmDeleteEntity={confirmDeleteMaterial}
-        setEntityToDelete={setMaterialToDelete}
-        entityToDelete={materialToDelete}
         entityName={"o material"}
+        entityToDelete={deleteTarget}
+        setEntityToDelete={setDeleteTarget}
+        confirmDeleteEntity={confirmDelete}
+      />
+      <MaterialCreateModal
+      open={showCreate}
+      onClose={() => setShowCreate(false)}
+      onSubmit={onCreate}
       />
     </main>
   );

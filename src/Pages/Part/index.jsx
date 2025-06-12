@@ -16,7 +16,6 @@ export default function Part() {
   const [showCreate, setShowCreate] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [pageSize, setPageSize] = useState(15);
-  const [fields, setFields] = useState([]);
   const navigate = useNavigate();
 
   const { parts, total, loading, fetchParts, removePart, createNewPart } =
@@ -29,29 +28,6 @@ export default function Part() {
     fetchParts({ page, field, value });
   }, [search, pageSize, fetchParts]);
 
-  useEffect(() => {
-    setFields([
-      {
-        name: "delivery_date",
-        label: "Data de Entrega",
-        type: "date",
-        required: true,
-      },
-      {
-        name: "quantity",
-        label: "Quantidade",
-        type: "number",
-        required: false,
-      },
-      {
-        name: "dimensions",
-        label: "Dimensões",
-        type: "text",
-        required: false,
-        placeholder: "Ex: 30x40x50",
-      },
-    ]);
-  }, []);
 
   const handleDelete = (p) => setDeleteTarget(p);
 
@@ -75,7 +51,7 @@ export default function Part() {
   const onCreate = async (formData) => {
     try {
       // await createNewPart(formData);
-      // console.log(formData);
+
       toast.success("Peça criada com sucesso!");
       setShowCreate(false);
 

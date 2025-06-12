@@ -39,7 +39,7 @@ export default function Customer() {
 
       const requestParams = {
         // associations: [],
-        limit: 6,
+        limit: 9,
         page: page,
       };
 

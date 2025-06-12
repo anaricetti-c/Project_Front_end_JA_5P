@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef, useContext } from "react";
 import {
   Header,
   NavContainer,
@@ -9,8 +10,8 @@ import {
   DropdownMenu,
   RightContainer,
 } from "./style.jsx";
+import { UserContext } from "../../Context/user";
 import ProfileAvatar from "../ProfileAvatar/index.jsx";
-import { useState, useEffect, useRef } from "react";
 
 export default function CustomNavBar() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -19,6 +20,7 @@ export default function CustomNavBar() {
   const handleDropdownToggle = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,52 +42,61 @@ export default function CustomNavBar() {
 
       <NavContainer ref={dropdownRef}>
         <Menu>
-          <Dropdown>
-            <DropdownToggle
-              onClick={() => handleDropdownToggle("producao")}
-              aria-expanded={openDropdown === "producao"}
-            >
-              Produção
-            </DropdownToggle>
-            {openDropdown === "producao" && (
-              <DropdownMenu>
-                <MenuItem to="/molds" onClick={handleMenuItemClick}>
-                  Moldes
-                </MenuItem>
-                <MenuItem to="/parts" onClick={handleMenuItemClick}>
-                  Peças
-                </MenuItem>
-                <MenuItem to="/materials" onClick={handleMenuItemClick}>
-                  Materiais
-                </MenuItem>
-                <MenuItem to="/operations" onClick={handleMenuItemClick}>
-                  Operações
-                </MenuItem>
-                <MenuItem to="/machines" onClick={handleMenuItemClick}>
-                  Máquinas
-                </MenuItem>
-              </DropdownMenu>
-            )}
-          </Dropdown>
-
-          <Dropdown>
-            <DropdownToggle
-              onClick={() => handleDropdownToggle("gestao")}
-              aria-expanded={openDropdown === "gestao"}
-            >
-              Gestão
-            </DropdownToggle>
-            {openDropdown === "gestao" && (
-              <DropdownMenu>
-                <MenuItem to="/customers" onClick={handleMenuItemClick}>
-                  Customers
-                </MenuItem>
-                <MenuItem to="/users" onClick={handleMenuItemClick}>
-                  Usuários
-                </MenuItem>
-              </DropdownMenu>
-            )}
-          </Dropdown>
+          {currentUser === null ? (
+            <></>
+          ) : (
+            <Dropdown>
+              <DropdownToggle
+                onClick={() => handleDropdownToggle("producao")}
+                aria-expanded={openDropdown === "producao"}
+              >
+                Produção
+              </DropdownToggle>
+              {openDropdown === "producao" && (
+                <DropdownMenu>
+                  <MenuItem to="/molds" onClick={handleMenuItemClick}>
+                    Moldes
+                  </MenuItem>
+                  <MenuItem to="/parts" onClick={handleMenuItemClick}>
+                    Peças
+                  </MenuItem>
+                  <MenuItem to="/materials" onClick={handleMenuItemClick}>
+                    Materiais
+                  </MenuItem>
+                  <MenuItem to="/operations" onClick={handleMenuItemClick}>
+                    Operações
+                  </MenuItem>
+                  <MenuItem to="/machines" onClick={handleMenuItemClick}>
+                    Máquinas
+                  </MenuItem>
+                </DropdownMenu>
+              )}
+            </Dropdown>
+          )}
+          {currentUser === null ? (
+            <></>
+          ) : currentUser.role === "Admin" ? (
+            <Dropdown>
+              <DropdownToggle
+                onClick={() => handleDropdownToggle("gestao")}
+                aria-expanded={openDropdown === "gestao"}
+              >
+                Gestão
+              </DropdownToggle>
+              {openDropdown === "gestao" && (
+                <DropdownMenu>
+                  <MenuItem to="/customers" onClick={handleMenuItemClick}>
+                    Customers
+                  </MenuItem>
+                  <MenuItem to="/users" onClick={handleMenuItemClick}>
+                    Usuários
+                  </MenuItem>
+                </DropdownMenu>
+              )}
+            </Dropdown>
+          ) : (
+            <></>
+          )}
         </Menu>
       </NavContainer>
 

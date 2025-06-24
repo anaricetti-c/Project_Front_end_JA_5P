@@ -54,11 +54,13 @@ export default function PartCreateModal({ open, onClose, onSubmit }) {
       name: "model_3d",
       label: "Modelo 3D",
       type: "checkbox",
+      size: 6,
     },
     {
       name: "nc_program",
       label: "Programa NC",
       type: "checkbox",
+      size: 6,
     },
     { name: "quantity", label: "Quantidade", type: "number", required: false },
   ];

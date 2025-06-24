@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import GenericCreateModal from "../../GenericCreateModal";
 import useUtils from "../../../hooks/useUtils";
 
-import { toast } from "react-toastify";
-
 export default function MaterialCreateModal({ open, onClose, onSubmit }) {
   const wrapperRef = useRef(null);
 
@@ -12,7 +10,6 @@ export default function MaterialCreateModal({ open, onClose, onSubmit }) {
     fetchUtils();
   }, []);
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -31,6 +28,7 @@ export default function MaterialCreateModal({ open, onClose, onSubmit }) {
       label: "Código",
       type: "number",
       required: false,
+      size: 12
     },
     {
       name: "description",
@@ -43,22 +41,14 @@ export default function MaterialCreateModal({ open, onClose, onSubmit }) {
       label: "Quantidade em Estoque",
       type: "number",
       required: false,
+      size: 6,
     },
     {
       name: "unit_of_measure",
       label: "Unidade de Medida",
       type: "text",
       required: false,
-    },
-    {
-      name: "time_unit",
-      label: "Unidade de Tempo para Reposição",
-      type: "select",
-      required: true,
-      options: timeUnit.map((tu) => ({
-        label: tu,
-        value: tu,
-      })),
+      size: 6,
     },
     {
       name: "time_quantity",
@@ -66,19 +56,21 @@ export default function MaterialCreateModal({ open, onClose, onSubmit }) {
       type: "number",
       required: true,
     },
+    {
+      name: "time_unit",
+      label: "Unidade de Tempo para Reposição",
+      type: "select",
+      selectMode: "normal",
+      required: true,
+      options: timeUnit.map((tu) => ({
+        label: tu,
+        value: tu,
+      })),
+    },
   ];
 
   const handleSubmit = (formData) => {
-    if (!selectedMold) {
-      toast.warning("Selecione um molde válido!");
-      return;
-    }
-    console.log(timeUnit);
-
     onSubmit({ ...formData });
-    setSelectedMold(null);
-    setShowDropdown(false);
-    setMoldQuery("");
   };
 
   return (
@@ -86,7 +78,7 @@ export default function MaterialCreateModal({ open, onClose, onSubmit }) {
       open={open}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title="Criar Peça"
+      title="Criar Material"
       fields={fields}
     ></GenericCreateModal>
   );

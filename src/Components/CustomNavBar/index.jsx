@@ -9,12 +9,17 @@ import {
   DropdownToggle,
   DropdownMenu,
   RightContainer,
+  ImportExel,
+  ExelIcon,
+  ButtonText,
 } from "./style.jsx";
 import { UserContext } from "../../Context/user";
 import ProfileAvatar from "../ProfileAvatar/index.jsx";
+import ImportExcelModal from "../ImportExcelModal/index.jsx";
 
 export default function CustomNavBar() {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef();
 
   const handleDropdownToggle = (menu) => {
@@ -75,7 +80,7 @@ export default function CustomNavBar() {
           )}
           {currentUser === null ? (
             <></>
-          ) : currentUser.role === "Admin" ? (
+          ) : currentUser.role !== "User" ? (
             <Dropdown>
               <DropdownToggle
                 onClick={() => handleDropdownToggle("gestao")}
@@ -101,8 +106,21 @@ export default function CustomNavBar() {
       </NavContainer>
 
       <RightContainer>
+        {currentUser === null ? (
+          <></>
+        ) : currentUser.role !== "User" ? (
+          <ImportExel onClick={() => setIsModalOpen(true)}>
+            <ExelIcon src="excel.png" alt="Excel" />
+            <ButtonText>Importar Excel</ButtonText>
+          </ImportExel>
+        ) : (
+          <></>
+        )}
         <ProfileAvatar />
       </RightContainer>
+      {isModalOpen && (
+        <ImportExcelModal onClose={() => setIsModalOpen(false)} />
+      )}
     </Header>
   );
 }

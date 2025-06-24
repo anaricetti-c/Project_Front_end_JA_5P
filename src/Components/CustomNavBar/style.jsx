@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const mainGreen = "#2f5936";
 const mainGreenHover = "#264b2d";
@@ -23,7 +23,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 `;
 
@@ -109,4 +109,47 @@ export const RightContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+`;
+
+export const ImportExel = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  overflow: hidden;
+  white-space: nowrap;
+
+  width: 60px;
+
+  &:hover {
+    width: 180px;
+  }
+`;
+
+export const ExelIcon = styled.img`
+  height: 20px;
+  width: 20px;
+`;
+
+export const ButtonText = styled.span`
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  ${ImportExel}:hover & {
+    opacity: 1;
+  }
 `;

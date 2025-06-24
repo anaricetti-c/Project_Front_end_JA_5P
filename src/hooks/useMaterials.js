@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { listMaterials, deleteMaterial, createMaterial } from "../services/materialService";
+import { cleanFormData } from "../utils/format";
 
 export default function useMaterials(pageSize) {
   const [materials, setMaterials] = useState([]);
@@ -30,11 +31,13 @@ export default function useMaterials(pageSize) {
   };
 
   const createNewMaterial = async (data) => {
-    // const normalizedData = {
-    //   ...data,
-    //   quantity: data.quantity ? Number(data.quantity) : undefined,
-    // };
-    await createMaterial(data);
+    data.lead_time = `${data.time_quantity} ${data.time_unit}`;
+    const normalizedData = {
+      ...data,
+      stock_quantity: data.stock_quantity ? Number(data.stock_quantity) : undefined,
+    };
+    // const cleanedData = cleanFormData(normalizedData);
+    await createMaterial(normalizedData);
   };
 
   return {

@@ -55,7 +55,8 @@ export default function Material() {
 
   const onCreate = async (formData) => {
     try {
-      // await createNewMaterial(formData);
+      console.log(formData);
+      await createNewMaterial(formData);
 
       toast.success("Material criada com sucesso!");
       setShowCreate(false);

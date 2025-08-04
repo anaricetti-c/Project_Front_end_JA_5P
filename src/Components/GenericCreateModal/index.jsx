@@ -114,7 +114,12 @@ export default function GenericCreateModal({
         <h2 className={styles.title}>{title}</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           {fields.map((field) => (
-            <div key={field.name} className={styles.inputGroup}>
+            <div
+              key={field.name}
+              className={`${styles.inputGroup} ${
+                styles[`size${field.size || 12}`]
+              }`}
+            >
               {field.type !== "checkbox" && (
                 <label htmlFor={field.name}>
                   {field.label}
@@ -124,7 +129,7 @@ export default function GenericCreateModal({
                 </label>
               )}
 
-              {field.type === "select" ? (
+              {field.type === "select" && field.selectMode === "smart" ? (
                 <div
                   className={styles.autocompleteWrapper}
                   ref={(el) => (dropdownRefs.current[field.name] = el)}
@@ -132,6 +137,7 @@ export default function GenericCreateModal({
                   <input
                     id={field.name}
                     name={field.name}
+                    className={styles.input}
                     type="text"
                     value={inputLabels[field.name] || ""}
                     onChange={handleChange}
@@ -159,6 +165,41 @@ export default function GenericCreateModal({
                       </ul>
                     )}
                 </div>
+              ) : field.type === "select" && field.selectMode === "normal" ? (
+                <select
+                  id={field.name}
+                  name={field.name}
+                  className={styles.input}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  required={field.required}
+                >
+                  {!field.default && (
+                    <option value="" disabled selected>
+                      {field.placeholder || "Selecione..."}
+                    </option>
+                  )}
+                  {field.options.map((opt) =>
+                    opt.selected ? (
+                      <option
+                        className={styles.optionsList}
+                        key={opt.value}
+                        value={opt.value}
+                        selected
+                      >
+                        {opt.label}
+                      </option>
+                    ) : (
+                      <option
+                        className={styles.optionsList}
+                        key={opt.value}
+                        value={opt.value}
+                      >
+                        {opt.label}
+                      </option>
+                    )
+                  )}
+                </select>
               ) : field.type === "textarea" ? (
                 <textarea
                   id={field.name}
@@ -195,7 +236,11 @@ export default function GenericCreateModal({
             </div>
           ))}
 
-          {children && <div className={styles.inputGroup}>{children}</div>}
+          {children && (
+            <div className={`${styles.inputGroup} ${styles.size12}`}>
+              {children}
+            </div>
+          )}
 
           <div className={styles.actions}>
             <button type="button" onClick={onClose} className={styles.cancel}>

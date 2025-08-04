@@ -17,7 +17,39 @@ export default function Mold() {
   const [showCreate, setShowCreate] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [pageSize, setPageSize] = useState(15);
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState([
+    {
+      name: "delivery_date",
+      label: "Data de Entrega",
+      type: "date",
+      required: true,
+      size: 12,
+    },
+    {
+      name: "quantity",
+      label: "Quantidade",
+      type: "number",
+      required: false,
+      size: 12,
+    },
+    {
+      name: "dimensions",
+      label: "Dimensões",
+      type: "text",
+      required: false,
+      placeholder: "Ex: 30x40x50",
+      size: 12,
+    },
+    {
+      name: "customer_id",
+      label: "Cliente",
+      type: "select",
+      selectMode: "smart",
+      required: false,
+      options: [],
+      placeholder: "Nenhum cliente cadastrado no momento..."
+    },
+  ]);
   const navigate = useNavigate();
 
   const { molds, total, loading, fetchMolds, removeMold, createNewMold } =
@@ -34,37 +66,20 @@ export default function Mold() {
 
   useEffect(() => {
     if (customers.length) {
-      setFields([
-        {
-          name: "delivery_date",
-          label: "Data de Entrega",
-          type: "date",
-          required: true,
-        },
-        {
-          name: "quantity",
-          label: "Quantidade",
-          type: "number",
-          required: false,
-        },
-        {
-          name: "dimensions",
-          label: "Dimensões",
-          type: "text",
-          required: false,
-          placeholder: "Ex: 30x40x50",
-        },
-        {
-          name: "customer_id",
-          label: "Cliente",
-          type: "select",
-          required: true,
-          options: customers.map((c) => ({
-            label: `${c.full_name} (${c.country_code})`,
-            value: c.id,
-          })),
-        },
-      ]);
+      setFields((prevFields) =>
+        prevFields.map((field) =>
+          field.name === "customer_id"
+            ? {
+                ...field,
+                placeholder: null,
+                options: customers.map((c) => ({
+                  label: `${c.full_name} (${c.country_code})`,
+                  value: c.id,
+                })),
+              }
+            : field
+        )
+      );
     }
   }, [customers]);
 
@@ -80,11 +95,12 @@ export default function Mold() {
 
     setSearch((prev) => {
       const newParams = new URLSearchParams(prev);
-      newParams.set("page", newPage);
+      newParams.set("page", newPage ? newPage : 1);
       newParams.set("refresh", Date.now().toString());
       return newParams;
     });
     setDeleteTarget(null);
+    toast.success("Molde deletado com sucesso!");
   };
 
   const onCreate = async (formData) => {
@@ -101,7 +117,9 @@ export default function Mold() {
       });
     } catch (error) {
       console.error("Erro ao criar molde:", error);
-      toast.error("Erro ao criar molde.");
+      // toast.error("Erro ao criar molde.");
+      toast.error(error.response.data.detail);
+
     }
   };
 
@@ -118,7 +136,7 @@ export default function Mold() {
     } else {
       return (
         <tr>
-          <td colSpan={9}>Nenhum molde cadastrado.</td>
+          <td className="emptyRow" colSpan={9}>Nenhum molde cadastrado.</td>
         </tr>
       );
     }

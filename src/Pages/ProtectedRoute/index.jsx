@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import AccessDenied from "../AccessDenied";
+import Spinner from "../../components/Spinner";
 import { api } from "../../services/api";
+import styles from "./style.module.css";
 
 export default function ProtectedRoute({ targetPage }) {
-  const [authorized, setAuthorized] = useState(null); // null = loading
+  const [authorized, setAuthorized] = useState(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -21,7 +23,11 @@ export default function ProtectedRoute({ targetPage }) {
         const expired = Date.now() >= exp * 1000;
 
         if (expired) {
-          const response = await api.post("/refresh_token", {}, { withCredentials: true });
+          const response = await api.post(
+            "/refresh_token",
+            {},
+            { withCredentials: true }
+          );
           const newToken = response.data.access_token;
           sessionStorage.setItem("@ACCESS_TOKEN", newToken);
         }
@@ -36,8 +42,15 @@ export default function ProtectedRoute({ targetPage }) {
     verifyAuth();
   }, []);
 
-  if (authorized === null) return <div>Carregando...</div>; // ou um Spinner bonitinho
+  if (authorized === null)
+    return (
+      <main className={styles.main}>
+        <Spinner />
+      </main>
+    );
   if (authorized === false) return <AccessDenied />;
 
   return targetPage;
 }
+
+

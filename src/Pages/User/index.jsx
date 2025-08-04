@@ -105,7 +105,7 @@ export default function User() {
         );
       });
     } else {
-      return <div className={styles.empty}>Nenhum usuário cadastrado.</div>;
+      return <div className={styles.cardEmpty}>Nenhum usuário cadastrado.</div>;
     }
   }
 

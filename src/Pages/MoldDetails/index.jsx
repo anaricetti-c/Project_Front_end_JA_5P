@@ -1,11 +1,12 @@
 import styles from "./style.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { getHeaders } from "../../services/headers";
 
 export default function MoldDetails() {
-  const { id } = useParams(); // ID do molde na URL
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [mold, setMold] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,10 @@ export default function MoldDetails() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
+        <button onClick={() => navigate(-1)} className={styles.backButton}>
+          ← Voltar
+        </button>
+
         <h1>Molde {mold.name}</h1>
 
         <section className={styles.section}>

@@ -10,8 +10,6 @@ export default function PaginatedCards({
   title = "",
   loading,
   getCards,
-  selectedFilter,
-  setSelectedFilter,
   rows = 2,
   columns = 3,
   search,
@@ -19,8 +17,10 @@ export default function PaginatedCards({
   total,
   filters,
   pageSize = 6,
+  setShowModal = () => null,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
     if (!search.get("page")) {
@@ -48,7 +48,10 @@ export default function PaginatedCards({
       <div className={styles.actions}>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.searchBar}>
-          <button className={`${styles.button} ${styles.adicionar}`}>
+          <button
+            onClick={() => setShowModal(true)}
+            className={`${styles.button} ${styles.adicionar}`}
+          >
             Adicionar
           </button>
           <CustomSelect
@@ -79,11 +82,13 @@ export default function PaginatedCards({
         </div>
       </div>
 
-      <div style={
-        { 
-          gridTemplateRows: `repeat(${rows}, 1fr)`, 
-          gridTemplateColumns: `repeat(${columns}, 1fr)`
-        }} className={styles.cardGrid}>
+      <div
+        style={{
+          gridTemplateRows: `repeat(${rows}, 1fr)`,
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        }}
+        className={styles.cardGrid}
+      >
         {!loading && getCards()}
       </div>
 

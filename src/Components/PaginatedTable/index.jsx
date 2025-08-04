@@ -5,6 +5,7 @@ import CustomSelect from "../CustomSelect";
 import CustomPagination from "../CustomPagination";
 
 import styles from "./style.module.css";
+import Spinner from "../Spinner";
 
 export default function PaginatedTable({
   tableName = "",
@@ -48,7 +49,10 @@ export default function PaginatedTable({
       <div className={styles.actions}>
         <h2 className={styles.tableName}>{tableName}</h2>
         <div className={styles.searchBar}>
-          <button onClick={() => setShowModal(true)} className={`${styles.button} ${styles.adicionar}`}>
+          <button
+            onClick={() => setShowModal(true)}
+            className={`${styles.button} ${styles.adicionar}`}
+          >
             Adicionar
           </button>
           <CustomSelect
@@ -88,7 +92,20 @@ export default function PaginatedTable({
               ))}
             </tr>
           </thead>
-          <tbody>{!loading && getEntities()}</tbody>
+          {loading ? (
+            <tbody>
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
+                  <Spinner />
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody>{getEntities()}</tbody>
+          )}
         </table>
       </div>
       {!loading && (

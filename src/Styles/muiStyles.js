@@ -63,8 +63,13 @@ export const defaultPaginationStyle = {
     fontWeight: 600,
     boxShadow: "0 2px 4px rgba(40, 167, 69, 0.35)",
   },
+  "& .MuiPaginationItem-root.Mui-selected:hover": {
+    backgroundColor: "#28a745",
+    color: "#fff",
+  },
   "& .MuiPaginationItem-root.Mui-disabled": {
     color: "#ccc",
     borderColor: "transparent",
   },
 };
+

@@ -10,7 +10,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const { data } = await api.post(
@@ -18,16 +18,18 @@ api.interceptors.response.use(
           {},
           { withCredentials: true }
         );
+
         sessionStorage.setItem("@ACCESS_TOKEN", data.access_token);
 
-        // Atualiza o Authorization do request original
-        originalRequest.headers["Authorization"] = `Bearer ${data.access_token}`;
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${data.access_token}`,
+        };
 
-        // Reenvia o request original com o novo token
-        return api(originalRequest);
+        return api.request(originalRequest);
       } catch (err) {
         sessionStorage.clear();
-        window.location.href = "/login";
+        window.location.href = "/";
         return Promise.reject(err);
       }
     }
@@ -35,3 +37,4 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+

@@ -41,11 +41,12 @@ export default function Part() {
 
     setSearch((prev) => {
       const newParams = new URLSearchParams(prev);
-      newParams.set("page", newPage);
+      newParams.set("page", newPage ? newPage : 1);
       newParams.set("refresh", Date.now().toString());
       return newParams;
     });
     setDeleteTarget(null);
+toast.success("Peça deletada com sucesso!");
   };
 
   const onCreate = async (formData) => {
@@ -80,7 +81,7 @@ export default function Part() {
     } else {
       return (
         <tr>
-          <td colSpan={9}>Nenhuma peça cadastrada.</td>
+          <td className="emptyRow" colSpan={9}>Nenhuma peça cadastrada.</td>
         </tr>
       );
     }

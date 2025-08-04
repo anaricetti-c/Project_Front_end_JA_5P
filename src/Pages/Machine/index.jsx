@@ -79,7 +79,7 @@ export default function Machine() {
 
       setSearch((prev) => {
         const newParams = new URLSearchParams(prev);
-        newParams.set("page", newPage);
+        newParams.set("page", newPage ? newPage : 1);
         newParams.set("refresh", Date.now().toString());
         return newParams;
       });
@@ -129,7 +129,7 @@ export default function Machine() {
     } else {
       return (
         <tr>
-          <td colSpan={5}>Nenhuma operação cadastrada.</td>
+          <td className="emptyRow" colSpan={5}>Nenhuma operação cadastrada.</td>
         </tr>
       );
     }

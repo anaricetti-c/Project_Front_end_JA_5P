@@ -43,19 +43,19 @@ export default function Material() {
 
     const maxPage = Math.ceil(newTotal / pageSize);
     const newPage = currentPage > maxPage ? maxPage : currentPage;
-    console.log("AAAA")
+
     setSearch((prev) => {
       const newParams = new URLSearchParams(prev);
-      newParams.set("page", newPage);
+      newParams.set("page", newPage ? newPage : 1);
       newParams.set("refresh", Date.now().toString());
       return newParams;
     });
     setDeleteTarget(null);
+    toast.success("Material deletado com sucesso!");
   };
 
   const onCreate = async (formData) => {
     try {
-      console.log(formData);
       await createNewMaterial(formData);
 
       toast.success("Material criada com sucesso!");
@@ -86,7 +86,9 @@ export default function Material() {
     } else {
       return (
         <tr>
-          <td colSpan={9}>Nenhum material cadastrada.</td>
+          <td className="emptyRow" colSpan={9}>
+            Nenhum material cadastrada.
+          </td>
         </tr>
       );
     }
@@ -123,9 +125,9 @@ export default function Material() {
         confirmDeleteEntity={confirmDelete}
       />
       <MaterialCreateModal
-      open={showCreate}
-      onClose={() => setShowCreate(false)}
-      onSubmit={onCreate}
+        open={showCreate}
+        onClose={() => setShowCreate(false)}
+        onSubmit={onCreate}
       />
     </main>
   );

@@ -1,5 +1,9 @@
 import { useState, useCallback } from "react";
-import { listCustomers } from "../services/customerService";
+import {
+  listCustomers,
+  deleteCustomer,
+  createCustomer,
+} from "../services/customerService";
 
 export default function useCustomers(pageSize) {
   const [customers, setCustomers] = useState([]);
@@ -23,5 +27,22 @@ export default function useCustomers(pageSize) {
     [pageSize]
   );
 
-  return { customers, fetchCustomers, total, loading };
+  const removeCustomer = async (material) => {
+    await deleteCustomer(material.id);
+    setCustomers((prev) => prev.filter((c) => c.id !== material.id));
+    setTotal((prev) => prev - 1);
+  };
+
+  const createNewCustomer = async (data) => {
+    await createCustomer(data);
+  };
+
+  return {
+    customers,
+    total,
+    loading,
+    fetchCustomers,
+    removeCustomer,
+    createNewCustomer,
+  };
 }

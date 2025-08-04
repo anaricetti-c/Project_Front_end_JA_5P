@@ -50,8 +50,8 @@
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   gap: 20px;
 }
 
@@ -76,7 +76,23 @@
   transition: border 0.2s;
   width: 100%;
   resize: none;
+  display: flex;
+  flex-direction: column;
 }
+
+.size1 { grid-column: span 1; }
+.size2 { grid-column: span 2; }
+.size3 { grid-column: span 3; }
+.size4 { grid-column: span 4; }
+.size5 { grid-column: span 5; }
+.size6 { grid-column: span 6; }
+.size7 { grid-column: span 7; }
+.size8 { grid-column: span 8; }
+.size9 { grid-column: span 9; }
+.size10 { grid-column: span 10; }
+.size11 { grid-column: span 11; }
+.size12 { grid-column: span 12; }
+
 
 /* Esconde o checkbox nativo */
 .container input {
@@ -152,11 +168,13 @@
 }
 
 .actions {
+  grid-column: span 12;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 12px;
 }
+
 
 .cancel,
 .save {
@@ -217,4 +235,17 @@
 
 .optionsList li:hover {
   background-color: #f0f0f0;
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+  width: 100%;
+}
+.input:focus {
+  border-color: #3d9970;
+  outline: none;
 }

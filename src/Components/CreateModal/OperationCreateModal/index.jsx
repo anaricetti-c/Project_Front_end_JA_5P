@@ -1,30 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 import GenericCreateModal from "../../GenericCreateModal";
-import useMolds from "../../../hooks/useMolds";
+import useMachines from "../../../hooks/useMachines";
 
 import styles from "./style.module.css";
 import { toast } from "react-toastify";
 
-export default function PartCreateModal({ open, onClose, onSubmit }) {
-  const [moldQuery, setMoldQuery] = useState("");
-  const [selectedMold, setSelectedMold] = useState(null);
+export default function OperationCreateModal({ open, onClose, onSubmit }) {
+  const [machineQuery, setMachineQuery] = useState("");
+  const [selectedMachine, setSelectedMachine] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const wrapperRef = useRef(null);
-  const { molds, fetchMolds } = useMolds(15);
+  const { machines, total, fetchMachines } = useMachines(15);
 
   useEffect(() => {
-    if (moldQuery.length < 2) {
+    if (machineQuery.length < 2) {
       setShowDropdown(false);
       return;
     }
 
-    fetchMolds({ page: 1, field: "mold.name", value: moldQuery }).then(() => {
+    fetchMachines({ page: 1, field: "machine.m_type", value: machineQuery }).then(() => {
       setShowDropdown(true);
     });
-  }, [moldQuery, fetchMolds]);
+  }, [machineQuery, fetchMachines]);
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -37,6 +36,7 @@ export default function PartCreateModal({ open, onClose, onSubmit }) {
     };
   }, []);
 
+
   const fields = [
     {
       name: "name",
@@ -45,37 +45,20 @@ export default function PartCreateModal({ open, onClose, onSubmit }) {
       required: false,
     },
     {
-      name: "description",
-      label: "Descrição",
-      type: "textarea",
-      required: false,
-    },
-    {
-      name: "model_3d",
-      label: "Modelo 3D",
-      type: "checkbox",
-      size: 6,
-    },
-    {
-      name: "nc_program",
-      label: "Programa NC",
-      type: "checkbox",
-      size: 6,
-    },
-    { name: "quantity", label: "Quantidade", type: "number", required: false },
+      name: "op_type",
+      label: "Nome",
+      type: "text",
+      required: true,
+    }
   ];
 
   const handleSubmit = (formData) => {
-    if (!selectedMold) {
-      toast.warning("Selecione um molde válido!");
-      return;
-    }
     console.log(formData);
 
-    onSubmit({ ...formData, mold_id: selectedMold.id });
-    setSelectedMold(null);
+    onSubmit({ ...formData, machine_id: selectedMachine ? selectedMachine.id : null});
+    setSelectedMachine(null);
     setShowDropdown(false);
-    setMoldQuery("");
+    setMachineQuery("");
   };
 
   return (
@@ -83,39 +66,38 @@ export default function PartCreateModal({ open, onClose, onSubmit }) {
       open={open}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title="Criar Peça"
+      title="Criar Operação"
       fields={fields}
     >
       <div ref={wrapperRef} className={styles.autocompleteWrapper}>
         <label>
-          Molde
-          <span className={styles.required}> *</span>
+          Maquina
         </label>
         <input
-          type="number"
-          placeholder="Busque o molde..."
-          value={moldQuery}
+          type="text"
+          placeholder="Busque pelo nome da maquina..."
+          value={machineQuery}
           onChange={(e) => {
-            setMoldQuery(e.target.value);
-            setSelectedMold(null);
+            setMachineQuery(e.target.value);
+            setSelectedMachine(null);
           }}
           onFocus={() => {
-            if (molds.length > 0) setShowDropdown(true);
+            if (machines.length > 0) setShowDropdown(true);
           }}
         />
-        {showDropdown && molds.length > 0 && (
+        {showDropdown && machines.length > 0 && (
           <ul className={styles.optionsList}>
-            {molds.map((opt) => (
+            {machines.map((opt) => (
               <li
                 key={opt.id}
                 onClick={() => {
-                  setSelectedMold(opt);
-                  setMoldQuery(opt.name);
+                  setSelectedMachine(opt);
+                  setMachineQuery(opt.m_type);
                   setShowDropdown(false);
                 }}
                 style={{ cursor: "pointer", padding: 4 }}
               >
-                {opt.name}
+                {opt.m_type}
               </li>
             ))}
           </ul>

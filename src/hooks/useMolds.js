@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { listMolds, deleteMold, createMold } from "../services/moldService";
+import { cleanFormData } from "../utils/format";
 
 export default function useMolds(pageSize) {
   const [molds, setMolds] = useState([]);
@@ -39,8 +40,8 @@ export default function useMolds(pageSize) {
       ...data,
       quantity: data.quantity ? Number(data.quantity) : undefined,
     };
-
-    await createMold(normalizedData);
+    const cleanedData = cleanFormData(normalizedData);
+    await createMold(cleanedData);
   };
 
   return {

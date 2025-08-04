@@ -5,6 +5,7 @@ export default function DeleteModal({
   setEntityToDelete,
   entityToDelete,
   entityName,
+  att = 'name'
 }) {
   if (!entityToDelete) return null;
 
@@ -14,7 +15,7 @@ export default function DeleteModal({
         <h3>Confirmar exclusão</h3>
         <p>
           Tem certeza que deseja excluir {entityName}{" "}
-          <strong>{entityToDelete.name}</strong>?
+          <strong>{entityToDelete[att]}</strong>?
         </p>
         <div className={styles.modalActions}>
           <button
